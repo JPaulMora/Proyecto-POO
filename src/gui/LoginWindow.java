@@ -26,8 +26,11 @@ public class LoginWindow extends JDialog {
 	private JLabel lblNotConnected;
 	private DBinterface db;
 
+	
 	/**
 	 * Create the dialog.
+	 * @param d Este parametro debe ser una instancia de DBinterface.
+	 * @param m Este parametro debe ser la ventana principal.
 	 */
 	public LoginWindow(DBinterface d,MainMenu m) {
 																			// Creacion de LoginWindow
@@ -70,18 +73,24 @@ public class LoginWindow extends JDialog {
 				loginButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e){
 						try {
-							// si las credenciales son incorrectas desplegamos la advertencia, si es correcto eliminamos el JDialog y desplegamos la interfaz principal
-							if (!db.connectDB(logintextField.getText(),String.valueOf(passwordField.getPassword()))){
-								if(!db.getConnected()){
+							// si las credenciales son incorrectas desplegamos la advertencia,
+							// si en cambio son correctas eliminamos el JDialog (Esta ventana) y desplegamos la interfaz principal (Main Menu).
+							
+							if (!db.connectDB(logintextField.getText(),String.valueOf(passwordField.getPassword()))){ 
+								//Si llegamos a este punto, quiere decir que hubo un error de login..
+								
+								if(!db.getConnected()){ //revisamos si fue un error de conexion o de Login y activamos el mensaje respectivo.
 									lblNotConnected.setVisible(true);
 								}else{
 									lblWrongloginLabel.setVisible(true);
 								}
-							}else{
+							}else{ 
+								//Login fue correcto.. activamos el MainMenu (m) y eliminamos esta ventana (LoginWindow).
 								m.setVisible(true);
 								dispose();
 							}
 						} catch (SQLException e1) {
+							//Si hubiera un error de SQL, el programa lo imprime en la consola.
 							e1.printStackTrace();
 						}
 						
@@ -108,12 +117,12 @@ public class LoginWindow extends JDialog {
 				lblNotConnected.setVisible(false);
 				
 				
-				//agregamos los elementos al buttonpane en el orden que los queremos (de izquierda a derecha)
+				//agregamos los elementos al buttonpane en el orden que los queremos (de izquierda a derecha).
 				buttonPane.add(lblWrongloginLabel);
 				buttonPane.add(lblNotConnected);
 				buttonPane.add(cancelButton);
 				buttonPane.add(loginButton);
-				getRootPane().setDefaultButton(loginButton);
+				getRootPane().setDefaultButton(loginButton); //Al hacer Login el default, presionar ENTER inicia sesion.
 				
 				
 				
@@ -125,11 +134,18 @@ public class LoginWindow extends JDialog {
 		//Objetos extras del constructor
 		 this.db = d;
 	}
-	
+	//Getters.. talvez no sean necesarios.
+	/**
+	 * @deprecated
+	 * @return Devuelve el nombre usado para inicar sesion.
+	 */
 	public String getUsername(){
 		return logintextField.getText();
 	}
-	
+	/**
+	 * @deprecated
+	 * @return Devuelve en password usado para inicar sesion.
+	 */
 	public String getPassword(){
 		return String.valueOf(passwordField.getPassword());
 	}

@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,10 +10,6 @@ import resources.DBinterface;
 import javax.swing.JTabbedPane;
 
 public class MainMenu extends JFrame {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -35,7 +30,6 @@ public class MainMenu extends JFrame {
 					LoginWindow logWin = new LoginWindow(db,frame);
 					logWin.setVisible(true);
 					
-					System.out.println(logWin.getPassword());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,10 +53,10 @@ public class MainMenu extends JFrame {
 		tabbedPane.setBounds(0, 19, 730, 459);
 		contentPane.add(tabbedPane);
 		
-		//tabbedPane.addTab("Test", null, contentPane, "This is a test.");
-		tabbedPane.addTab("Ventas",null);
-		tabbedPane.addTab("Transacciones",null);
-		tabbedPane.addTab("Productos",null);
+		tabbedPane.addTab("Ventas",null); 				//Tab que servira para "Cobrar".
+		tabbedPane.addTab("Productos",null);			//Tab para organizar los productos.
+		tabbedPane.addTab("Transacciones",null);		//Tab par ver el historial de transacciones.
+		tabbedPane.addTab("Consultar DB",null);			//Tab para consultar cosas especificas de la DB.
 		
 	}
 }
