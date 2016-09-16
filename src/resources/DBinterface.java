@@ -4,7 +4,7 @@ import java.sql.*;
 public class DBinterface {
 	private boolean connected = false;
 	
-	String DB_URL = "jdbc:mysql://localhost/ventas";
+	String DB_URL = "jdbc:mysql://pproyectop.now.im/Ventas";
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
