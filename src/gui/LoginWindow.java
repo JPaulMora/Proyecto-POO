@@ -23,6 +23,7 @@ public class LoginWindow extends JDialog {
 	private JTextField logintextField;
 	private JPasswordField passwordField;
 	private JLabel lblWrongloginLabel;
+	private JLabel lblNotConnected;
 	private DBinterface db;
 
 	/**
@@ -71,7 +72,11 @@ public class LoginWindow extends JDialog {
 						try {
 							// si las credenciales son incorrectas desplegamos la advertencia, si es correcto eliminamos el JDialog y desplegamos la interfaz principal
 							if (!db.connectDB(logintextField.getText(),String.valueOf(passwordField.getPassword()))){
-								lblWrongloginLabel.setVisible(true);
+								if(!db.getConnected()){
+									lblNotConnected.setVisible(true);
+								}else{
+									lblWrongloginLabel.setVisible(true);
+								}
 							}else{
 								m.setVisible(true);
 								dispose();
@@ -98,9 +103,14 @@ public class LoginWindow extends JDialog {
 				lblWrongloginLabel = new JLabel("Login Incorrecto");
 				lblWrongloginLabel.setVisible(false);
 				
+				//Label inicialmente oculta que aparece cuando no se puede conectar con la DB.
+				lblNotConnected = new JLabel("No se pudo conectar.");
+				lblNotConnected.setVisible(false);
+				
 				
 				//agregamos los elementos al buttonpane en el orden que los queremos (de izquierda a derecha)
 				buttonPane.add(lblWrongloginLabel);
+				buttonPane.add(lblNotConnected);
 				buttonPane.add(cancelButton);
 				buttonPane.add(loginButton);
 				getRootPane().setDefaultButton(loginButton);

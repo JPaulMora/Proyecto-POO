@@ -2,6 +2,7 @@ package resources;
 
 import java.sql.*;
 public class DBinterface {
+	private boolean connected = false;
 	
 	String DB_URL = "jdbc:mysql://localhost/ventas";
 	Connection c = null;
@@ -18,14 +19,25 @@ public class DBinterface {
 		try{
 			c = DriverManager.getConnection(DB_URL,User,Pass);
 			System.out.println("Login correcto a DB.");
+			connected = true;
 			return true;
+		}catch (com.mysql.jdbc.CommunicationsException e){
+			System.out.println("No se pudo conectar a DB.");
+			connected = false;
+			return false;
 		}catch( com.mysql.jdbc.exceptions.MySQLSyntaxErrorException e){
-			System.out.println("Error conectando a la DB.");
+			System.out.println("Error en SQL.");
+			connected = true;
 			return false;
 		}catch (java.sql.SQLException e){
 			System.out.println("Credenciales incorrectas DB.");
+			connected = true;
 			return false;
 		}
+	}
+	
+	public boolean getConnected(){
+		return connected;
 	}
 
 	public String queryDB(String sql) throws SQLException{
