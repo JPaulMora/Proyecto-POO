@@ -32,10 +32,10 @@ public class LoginWindow extends JDialog {
 	 * @param d Este parametro debe ser una instancia de DBinterface.
 	 * @param m Este parametro debe ser la ventana principal.
 	 */
-	public LoginWindow(DBinterface d,MainMenu m) {
+	public LoginWindow(int w, int h,DBinterface d,MainMenu m) {
 																			// Creacion de LoginWindow
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 344, 173);
+		setBounds(w/2-172, h/2-86, 344, 172);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

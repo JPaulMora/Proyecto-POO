@@ -2,6 +2,10 @@ package gui;
 
 import java.sql.*;
 
+/*
+ * ESTA CLASE ES PARA PRUEBAS EN LA DB, ESTA NO DEBERIA SER ENTREGADA EN EL PROYECTO FINAL. DE TODOS MODOS COMENTEN LOS TESTS QUE HAGAN AQUI.
+ */
+
 import resources.DBinterface;
 
 public class Ventas {
