@@ -10,7 +10,7 @@ public class AdminPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public AdminPanel(String description) {
+	public AdminPanel() {
 		this.setLayout(null);
 		this.setBounds(285, 83, 699, 164); //Como agregamos el panel a un JWindow, esto no importa. Lo ponemos solo para que se vea bien en el Design tab.
 		

@@ -5,7 +5,7 @@ public class DBinterface {
 	private boolean connected = false; //Variable guarda el valor TRUE si el programa pudo acceder al servidor.
 	
 	//Variables necesarias para los comandos SQL. 
-	String DB_URL = "jdbc:mysql://pproyectop.now.im/Ventas";
+	String DB_URL = "jdbc:mysql://localhost/ventas";//"jdbc:mysql://pproyectop.now.im/Ventas";
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
@@ -35,15 +35,15 @@ public class DBinterface {
 			return true;
 		}catch (com.mysql.jdbc.CommunicationsException e){				//Caso 2: El programa no puede conectarse al servidor.
 			//
-			System.out.println("No se pudo conectar a DB.");
+			System.out.println("No se pudo conectar a DB:"+e.toString());
 			connected = false;
 			return false;
 		}catch( com.mysql.jdbc.exceptions.MySQLSyntaxErrorException e){ //Caso 3: Hubo un error en el comando SQL.
-			System.out.println("Error en SQL.");
+			System.out.println("Error en SQL: "+e.toString());
 			connected = true;
 			return false;
 		}catch (java.sql.SQLException e){								//Caso 4: Login fue incorrecto;
-			System.out.println("Credenciales incorrectas DB.");
+			System.out.println("Credenciales incorrectas DB: "+e.toString());
 			connected = true;
 			return false;
 		}
