@@ -252,12 +252,13 @@
             </div>
 			
             <div class="container">
-                <div class="row" style="margin-top: 30px;">
+                <div class="row" >
                     <div class="col-lg-12">
                         <div class="modal-body">
                             <h2>Pagar consumos con tarjeta de credito:</h2>
-							 <div class="row">
-                                 <div class="col-lg-6 cold-md-6 col-sm-12 cold-sm-12">
+							 <div class="row" style="margin-top: 30px;">
+                                 <div class="col-lg-6 cold-md-6 col-sm-12 cold-sm-12" sy>
+                                     <br>
                                      <label for="TarjetaC">No. de tarjeta de credito</label>
                                      <div id="campoNOTC">
                                           <input type="text" onkeypress="validateEvnt()"  placeholder="No. de tarjeta de credito (solo numeros)" class="form-control" id="TarjetaC">
@@ -315,7 +316,10 @@
 
             if( NoTC!=null){
                 if(NoTC.length>=15){
+                    console.log("IM TRYING THO");
                     var Cara=true;
+                    document.getElementById("campoNOTC").className += "form-group has-success";
+
                 }
 
             }else{
@@ -323,9 +327,10 @@
                 document.getElementById("campoNOTC").className += "form-group has-error";
             }
 
-            if( NoTC!=null){
+            if( FeTC!=null){
                 if(FeTC.length>=5 ){
                     var Escudo=true;
+                    document.getElementById("campoFETC").className += "form-group has-success";
                 }
 
             }else{
