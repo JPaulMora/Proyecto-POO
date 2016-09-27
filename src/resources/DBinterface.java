@@ -5,7 +5,7 @@ public class DBinterface {
 	private boolean connected = false; //Variable guarda el valor TRUE si el programa pudo acceder al servidor.
 	
 	//Variables necesarias para los comandos SQL. 
-	String DB_URL = "jdbc:mysql://localhost/ventas";//"jdbc:mysql://pproyectop.now.im/Ventas";
+	String DB_URL = "jdbc:mysql://pproyectop.now.im/Ventas";//"jdbc:mysql://localhost/ventas";
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
