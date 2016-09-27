@@ -1,6 +1,10 @@
 package resources;
 
 import java.sql.*;
+
+import javax.swing.table.TableModel;
+
+import net.proteanit.sql.DbUtils;
 public class DBinterface {
 	private boolean connected = false; //Variable guarda el valor TRUE si el programa pudo acceder al servidor.
 	
@@ -103,6 +107,12 @@ public class DBinterface {
 			return "No Encontrado";
 		}
 		
+	}
+	
+	public TableModel getProductos() throws SQLException{
+		PreparedStatement ps = c.prepareStatement("select * from Productos;");
+		r = ps.executeQuery();
+		return DbUtils.resultSetToTableModel(r);
 	}
 	
 	/**

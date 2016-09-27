@@ -1,13 +1,17 @@
 package gui;
 
+import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import resources.DBinterface;
+
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.JList;
 
 public class VentasPanel extends JPanel {
 	/**
@@ -20,9 +24,10 @@ public class VentasPanel extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws SQLException 
 	 */
 
-public VentasPanel() {	   
+public VentasPanel(DBinterface d) throws SQLException {	   
 		this.setBounds(0, 0, 725, 410);
 		setLayout(null);
 		
@@ -68,7 +73,7 @@ public VentasPanel() {
 		spProductos.setBounds(37, 63, 655, 106);
 		add(spProductos);
 		
-		tblProductos = new JTable();
+		tblProductos = new JTable(d.getProductos());
 		spProductos.setViewportView(tblProductos);
 		
 		

@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,14 +26,34 @@ public class LoginWindow extends JDialog {
 	private JLabel lblWrongloginLabel;
 	private JLabel lblNotConnected;
 	private DBinterface db;
-
+	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	private static final int ScreenWidth = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
+	private static final int ScreenHeight = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 	
 	/**
 	 * Create the dialog.
 	 * @param d Este parametro debe ser una instancia de DBinterface.
 	 * @param m Este parametro debe ser la ventana principal.
 	 */
-	public LoginWindow(int w, int h,DBinterface d,MainMenu m) {
+	
+	public static void main(String[] args) throws ClassNotFoundException {
+		Class.forName(JDBC_DRIVER);
+		DBinterface db = new DBinterface();
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LoginWindow logWin = new LoginWindow(ScreenWidth, ScreenHeight,db);
+					logWin.setVisible(true);
+					//frame.setVisible(true);    //TODO debug, sirve para que no use DB
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public LoginWindow(int w, int h,DBinterface d) {
 																			// Creacion de LoginWindow
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(w/2-172, h/2-86, 344, 172);
@@ -86,8 +107,10 @@ public class LoginWindow extends JDialog {
 								}
 							}else{ 
 								//Login fue correcto.. activamos el MainMenu (m) y eliminamos esta ventana (LoginWindow).
-								m.setVisible(true);
-								dispose();
+								setVisible(false);
+								
+								MainMenu frame = new MainMenu(db);
+								frame.setVisible(true);
 							}
 						} catch (SQLException e1) {
 							//Si hubiera un error de SQL, el programa lo imprime en la consola.
