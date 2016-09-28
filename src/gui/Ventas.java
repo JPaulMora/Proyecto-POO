@@ -15,8 +15,7 @@ public class Ventas {
 		DBinterface db = new DBinterface();
 		db.connectDB("User1", "12345");
 		//String r = db.queryDB("SELECT * FROM Clientes WHERE client_id = 1;");//"SELECT carnet FROM Clientes WHERE client_id = 2;");
-		db.getBalance(15799, "UVG");
-		System.out.println(db.getBalance(15799, "'UVG"));
+		//db.getBalance(15799, "UVG");
 		
 		
 		System.out.println(db.queryDB("SELECT * FROM Clientes WHERE institucion = 'UVG'"));

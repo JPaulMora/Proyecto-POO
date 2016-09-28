@@ -1,5 +1,7 @@
 package resources;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.sql.*;
 
 import javax.swing.table.TableModel;
@@ -7,6 +9,7 @@ import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
 public class DBinterface {
 	private boolean connected = false; //Variable guarda el valor TRUE si el programa pudo acceder al servidor.
+	private final String institucion = "UVG";
 	
 	//Variables necesarias para los comandos SQL. 
 	String DB_URL = "jdbc:mysql://pproyectop.now.im/Ventas";//"jdbc:mysql://localhost/ventas";
@@ -88,7 +91,7 @@ public class DBinterface {
 	 * @return Devuelve el balance del usuario requerido en forma de String, o un mensaje que indica que no fue encontrado.
 	 * @throws SQLException
 	 */
-	public String getBalance(int carnet, String institucion) throws SQLException{
+	public Double getBalance(int carnet) throws SQLException{
 		
 		//Se utiliza PreparedStatement porque este verifica que el comando sea valido para SQL, tambien es mas rapido.
 		PreparedStatement ps = c.prepareStatement("SELECT balance FROM Clientes WHERE carnet = ? AND institucion = ?;");
@@ -99,21 +102,50 @@ public class DBinterface {
 		r = ps.executeQuery();					//Envia el comando al servidor.
 		r.next();								//el ResultSet (r) inicia "detras" de la primera columna, al llamar next() se mueve al primer dato.
 		try{
-			String ans = r.getString(1);		//Como solo deberia haber un dato, este debe estar en la posicion 1 
+			Double ans = r.getDouble(1);		//Como solo deberia haber un dato, este debe estar en la posicion 1 
 												//y con getString lo convertimos al tipo de dato requerido
 			return ans;
 			
-		}catch( java.sql.SQLException e){		//En caso no existe.. devolver este mensaje.
-			return "No Encontrado";
+		}catch( java.sql.SQLException e){		//En caso no existe.. devolver este mensaje (0).
+			return 00.0;
 		}
 		
 	}
 	
+	public void setBalance(int carnet, double d) throws SQLException{
+		//Se utiliza PreparedStatement porque este verifica que el comando sea valido para SQL, tambien es mas rapido.
+				PreparedStatement ps = c.prepareStatement("UPDATE `Clientes` SET `balance` = ? WHERE `carnet` = ?;");
+				BigDecimal b = new BigDecimal(d, MathContext.DECIMAL32).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+				ps.setBigDecimal(1, b);
+				ps.setInt(2, carnet);
+
+				System.out.println("setBalance update returned "+ps.executeUpdate());
+	}
+	
+	public void regCompra(int carnet, double total) throws SQLException{
+		PreparedStatement ps = c.prepareStatement("INSERT INTO `Transacciones` (`tran_id`, `comprador`,`institucion`, `monto`, `fecha`) VALUES (NULL, ?, ?, ?, NULL);");
+		
+		BigDecimal b = new BigDecimal(total, MathContext.DECIMAL32).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		ps.setInt(1, carnet);
+		ps.setString(2, institucion);
+		ps.setBigDecimal(3, b);
+		//System.out.println(ps.toString());
+		
+		System.out.println("regCompra update returned "+ps.executeUpdate());
+	}
+
+	/**
+	 * 
+	 * @return Devuelve los Productos registrados en un TableModel para utilizar en un JTable.
+	 * @throws SQLException
+	 */
 	public TableModel getProductos() throws SQLException{
 		PreparedStatement ps = c.prepareStatement("select * from Productos;");
 		r = ps.executeQuery();
 		return DbUtils.resultSetToTableModel(r);
 	}
+	
+	
 	
 	/**
 	 * Este metodo debe ser llamado al finaizar el programa para que se cierre la conexion a la DB.
@@ -126,5 +158,6 @@ public class DBinterface {
 		
 		//cerrar conexion.
 		c.close();
+		System.out.println("Desconectando DB.");
 	}
 }

@@ -1,19 +1,13 @@
 package gui;
 
-import java.awt.EventQueue;
-import java.awt.Panel;
-import java.awt.Rectangle;
 import java.sql.SQLException;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 import resources.DBinterface;
-import javax.swing.JTextField;
 
 public class MainMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -21,28 +15,9 @@ public class MainMenu extends JFrame {
 	private static final int ScreenHeight = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 	private JPanel contentPane;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	private DBinterface d;
 
-	/**
-	 * Launch the application.
-	 * @throws ClassNotFoundException 
-	 */
-//	public static void main(String[] args) throws ClassNotFoundException {
-//		Class.forName(JDBC_DRIVER);
-//		DBinterface db = new DBinterface();
-//		
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					MainMenu frame = new MainMenu(db);
-//					LoginWindow logWin = new LoginWindow(ScreenWidth, ScreenHeight,db,frame);
-//					logWin.setVisible(true);
-//					//frame.setVisible(true);    //TODO debug, sirve para que no use DB
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+//main() movido a LoginWindow
 
 	/**
 	 * Create the frame.
@@ -62,7 +37,7 @@ public class MainMenu extends JFrame {
 		contentPane.add(tabbedPane);
 		
 		JPanel ventas = new VentasPanel(d);
-		JPanel admin = new AdminPanel(d);             //Cambiamos metodo por constructor.
+		JPanel admin = new AdminPanel(d);             //Cambiamos metodo por constructor, a cada panel se le da una referencia a DBinterface (d).
 		
 		tabbedPane.addTab("Ventas",null,ventas); 				//Tab que servira para "Cobrar".
 		tabbedPane.addTab("Administracion",null,admin);			//Tab para organizar los productos.
