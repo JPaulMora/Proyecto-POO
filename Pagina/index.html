@@ -100,7 +100,7 @@
                     <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
-                               <h3><strong>Pagar Consumos</strong></h3>
+                               <h3><strong>Hacer un consumo</strong></h3>
                             </div>
                         </div>
                         <img src="img/portfolio/restaurant-app.png" class="img-responsive" style="padding-left:45px;">
@@ -255,29 +255,50 @@
                 <div class="row" >
                     <div class="col-lg-12">
                         <div class="modal-body">
-                            <h2>Pagar consumos con tarjeta de credito:</h2>
-							 <div class="row" style="margin-top: 30px;">
-                                 <div class="col-lg-6 cold-md-6 col-sm-12 cold-sm-12" sy>
-                                     <br>
-                                     <label for="TarjetaC">No. de tarjeta de credito</label>
-                                     <div id="campoNOTC">
-                                          <input type="text" onkeypress="validateEvnt()"  placeholder="No. de tarjeta de credito (solo numeros)" class="form-control" id="TarjetaC">
-                                     </div>
-                                 </div>
-                                 <br>
-                                 <div class="col-lg-6 cold-md-6 col-sm-12 cold-sm-12">
-                                     <label for="TarjetaExpiracion">Fecha Expiracion</label>
-                                     <div id="campoFETC">
-                                        <input type="text" ONKEYPRESS="validateEvnt()" placeholder="Fecha de expiracion MM/YY" class="form-control" id="TarjetaExpiracion">
-                                     </div>
-                                 </div>
-                                 <br>
-                                 <button type="submit" class="btn btn-default" onclick="pagar()">Pagar</button>
+                            <h2>Realizar un Consumo</h2>
+                            <div id="accordion" role="tablist" aria-multiselectable="true" style="margin-top:20px;  ">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                Café Gitane
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                        <div id="gitane">
+                                            <input  type="text" class="form-control" placeholder="Escriba el producto que desea">
 
-                                 </div>
 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                GoGreen
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingThree">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                Bagel Factory
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
                             </div>
-						<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -339,16 +360,17 @@
             }
 
         }
-
     </script>
+
+
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.js"></script>
-	
-	<!-- jQuery-UI -->
-	<script src="js/jquery-ui.js"></script>
+
+
 
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
