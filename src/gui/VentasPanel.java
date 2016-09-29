@@ -52,7 +52,7 @@ public VentasPanel(DBinterface d) throws SQLException {
 		//Tabla de Productos
 		
 		JScrollPane spProductos = new JScrollPane();
-		spProductos.setBounds(37, 63, 655, 106);
+		spProductos.setBounds(37, 63, 643, 106);
 		add(spProductos);
 		
 		tblProductos = new JTable(d.getProductos());
@@ -161,7 +161,7 @@ public VentasPanel(DBinterface d) throws SQLException {
 		
 		
 		JScrollPane spCuentas = new JScrollPane();
-		spCuentas.setBounds(37, 220, 655, 96);
+		spCuentas.setBounds(37, 220, 643, 96);
 		add(spCuentas);
 		
 		spCuentas.setViewportView(tblCarro);

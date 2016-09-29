@@ -6,132 +6,135 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import resources.DBinterface;
+
 import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
 
 public class EmpleadosPanel extends JPanel {
 	private JTable tableVerEmpleados;
-	private JTable table_1;
-	private JTable tableAgregarEmpleado;
-	private JTextField tfIngresarDpi;
+	private String[] Empleados;
+	private JComboBox comboBox;
+	private JTextField txtDPI;
+	private JTextField txtNombres;
+	private JTextField txtApellidos;
 
 	/**
 	 * Create the panel.
+	 * @throws SQLException 
 	 */
-	public EmpleadosPanel() {
+	public EmpleadosPanel(DBinterface d) throws SQLException {
 		setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Ver Empleados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(10, 11, 546, 169);
-		add(panel);
-		panel.setLayout(null);
+		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Ver Empleados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		setBounds(10, 11, 688, 403);
+
+		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 27, 526, 131);
-		panel.add(scrollPane);
+		scrollPane.setBounds(10, 27, 661, 131);
+		add(scrollPane);
 		
 		tableVerEmpleados = new JTable();
-		tableVerEmpleados.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, "", null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"DPI", "Nombre", "Tipo de Autorizacion"
-			}
-		));
+		tableVerEmpleados.setModel(d.getEmpleados());
 		scrollPane.setViewportView(tableVerEmpleados);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Agregar", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(10, 190, 324, 128);
-		add(panel_1);
-		panel_1.setLayout(null);
-		
-		table_1 = new JTable();
-		table_1.setBorder(new LineBorder(SystemColor.control));
-		table_1.setBackground(SystemColor.control);
-		table_1.setShowHorizontalLines(false);
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"DPI"},
-				{"Nombre"},
-				{"Tipo de Autorizacion"},
-			},
-			new String[] {
-				"New column"
-			}
-		));
-		table_1.setBounds(10, 25, 112, 48);
-		panel_1.add(table_1);
-		
-		tableAgregarEmpleado = new JTable();
-		tableAgregarEmpleado.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tableAgregarEmpleado.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null},
-				{null},
-				{null},
-			},
-			new String[] {
-				"New column"
-			}
-		));
-		tableAgregarEmpleado.setBounds(122, 23, 178, 48);
-		panel_1.add(tableAgregarEmpleado);
+		JPanel pnAgregar = new JPanel();
+		pnAgregar.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Agregar", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnAgregar.setBounds(10, 170, 371, 175);
+		add(pnAgregar);
+		pnAgregar.setLayout(null);
 		
 		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(122, 84, 89, 23);
-		panel_1.add(btnAgregar);
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					long b = Long.parseLong(txtDPI.getText());
+					d.addEmpleado(b, txtNombres.getText(), txtApellidos.getText());
+					updateData(d);
+					
+				}
+				catch(NumberFormatException e1){
+					System.out.println("NumberFormatException: ");
+					e1.printStackTrace();
+				}
+				catch(SQLException e2){
+					System.out.println("SQLException: ");
+					e2.printStackTrace();
+				}
+			}
+		});
+		btnAgregar.setBounds(233, 120, 89, 23);
+		pnAgregar.add(btnAgregar);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Eliminar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(344, 191, 212, 128);
-		add(panel_2);
-		panel_2.setLayout(null);
+		txtDPI = new JTextField();
+		txtDPI.setText("DPI");
+		txtDPI.setBounds(19, 27, 130, 26);
+		pnAgregar.add(txtDPI);
+		txtDPI.setColumns(10);
 		
-		JLabel lblDpi = new JLabel("DPI");
-		lblDpi.setBounds(92, 23, 36, 14);
-		panel_2.add(lblDpi);
+		txtNombres = new JTextField();
+		txtNombres.setText("Nombres");
+		txtNombres.setColumns(10);
+		txtNombres.setBounds(19, 69, 130, 26);
+		pnAgregar.add(txtNombres);
 		
-		tfIngresarDpi = new JTextField();
-		tfIngresarDpi.setBounds(43, 48, 123, 20);
-		panel_2.add(tfIngresarDpi);
-		tfIngresarDpi.setColumns(10);
+		txtApellidos = new JTextField();
+		txtApellidos.setText("Apellidos");
+		txtApellidos.setColumns(10);
+		txtApellidos.setBounds(19, 117, 130, 26);
+		pnAgregar.add(txtApellidos);
+		
+		JPanel pnEliminar = new JPanel();
+		pnEliminar.setBorder(new TitledBorder(null, "Eliminar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnEliminar.setBounds(393, 170, 278, 175);
+		add(pnEliminar);
+		pnEliminar.setLayout(null);
 		
 		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(64, 81, 89, 23);
-		panel_2.add(btnEliminar);
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Esto eliminaria al empleado "+Empleados[comboBox.getSelectedIndex()]);
+			}
+		});
+		btnEliminar.setBounds(95, 122, 89, 23);
+		pnEliminar.add(btnEliminar);
+		
+		Empleados = new String[tableVerEmpleados.getModel().getRowCount()];
+		for (int i=0; i< tableVerEmpleados.getModel().getRowCount(); i++){
+			Empleados[i] = (String) tableVerEmpleados.getModel().getValueAt(i, 1);
+		}
+		
+		comboBox = new JComboBox(Empleados);
+		comboBox.setEditable(true);
+		comboBox.setBounds(24, 33, 233, 27);
+		pnEliminar.add(comboBox);
 		
 		JButton btnVerVentasPor = new JButton("Ver Ventas por Empleado");
-		btnVerVentasPor.setBounds(204, 340, 212, 23);
+		btnVerVentasPor.setBounds(459, 358, 212, 23);
 		add(btnVerVentasPor);
 
 	}
-
+	
+	private void updateData(DBinterface d) throws SQLException{
+		tableVerEmpleados.setModel(d.getEmpleados());
+		Empleados = new String[tableVerEmpleados.getModel().getRowCount()];
+		for (int i=0; i< tableVerEmpleados.getModel().getRowCount(); i++){
+			Empleados[i] = (String) tableVerEmpleados.getModel().getValueAt(i, 1);
+		}
+		
+		comboBox.addItem(Empleados[Empleados.length-1]);
+	}
 }

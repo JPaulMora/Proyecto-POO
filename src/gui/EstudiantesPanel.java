@@ -4,136 +4,147 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import resources.DBinterface;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.ScrollPaneConstants;
 import java.awt.SystemColor;
+import java.sql.SQLException;
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class EstudiantesPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTable tableVerEstudiante;
-	private JTable table_1;
-	private JTable tableAgregarEstudiante;
-	private JTextField tfEliminarEstudiante;
+	private JTextField txtNombres;
+	private JTextField txtApellidos;
+	private JTextField txtCarnet;
+	private JTextField txtBalance;
+	private String[] Estudiantes;
+	private JComboBox comboBox;
 
 	/**
 	 * Create the panel.
+	 * @throws SQLException 
 	 */
-	public EstudiantesPanel() {
+	public EstudiantesPanel(DBinterface d) throws SQLException {
 		setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Ver Estudiante", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 11, 548, 154);
-		add(panel);
-		panel.setLayout(null);
+		setBorder(new TitledBorder(null, "Ver Estudiante", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBounds(10, 11, 688, 403);
+		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setEnabled(false);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 22, 528, 121);
-		panel.add(scrollPane);
+		scrollPane.setBounds(10, 22, 660, 136);
+		add(scrollPane);
 		
-		tableVerEstudiante = new JTable();
-		tableVerEstudiante.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-			},
-			new String[] {
-				"Carnet", "Nombre", "Carrera", "Disponibilidad", "Consumo"
-			}
-		));
+		tableVerEstudiante = new JTable(d.getEstudiantes());
 		scrollPane.setViewportView(tableVerEstudiante);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Agregar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 170, 323, 154);
-		add(panel_1);
-		panel_1.setLayout(null);
-		
-		table_1 = new JTable();
-		table_1.setBorder(new LineBorder(SystemColor.control));
-		table_1.setShowHorizontalLines(false);
-		table_1.setBackground(SystemColor.control);
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Carnet"},
-				{"Nombre"},
-				{"Carrera"},
-				{"Disponibilidad"},
-				{"Consumo"},
-			},
-			new String[] {
-				"New column"
-			}
-		));
-		table_1.setBounds(10, 23, 82, 80);
-		panel_1.add(table_1);
-		
-		tableAgregarEstudiante = new JTable();
-		tableAgregarEstudiante.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tableAgregarEstudiante.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null},
-				{null},
-				{null},
-				{null},
-				{null},
-			},
-			new String[] {
-				"New column"
-			}
-		));
-		tableAgregarEstudiante.setBounds(99, 23, 214, 80);
-		panel_1.add(tableAgregarEstudiante);
+		JPanel plAgregar = new JPanel();
+		plAgregar.setBorder(new TitledBorder(null, "Agregar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		plAgregar.setBounds(10, 170, 371, 175);
+		add(plAgregar);
+		plAgregar.setLayout(null);
 		
 		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(109, 114, 89, 23);
-		panel_1.add(btnAgregar);
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					int a = Integer.parseInt(txtCarnet.getText());
+					double b = Double.parseDouble(txtBalance.getText());
+					d.addEstudiante(a, txtNombres.getText(), txtApellidos.getText(), b);
+					updateData(d);
+					
+				}
+				catch(NumberFormatException e1){
+					System.out.println("NumberFormatException: ");
+					e1.printStackTrace();
+				}
+				catch(SQLException e2){
+					System.out.println("SQLException: ");
+					e2.printStackTrace();
+				}
+			}
+		});
+		btnAgregar.setBounds(233, 120, 89, 23);
+		plAgregar.add(btnAgregar);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Eliminar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(341, 170, 217, 154);
-		add(panel_2);
-		panel_2.setLayout(null);
+		txtNombres = new JTextField();
+		txtNombres.setText("Nombres");
+		txtNombres.setBounds(19, 69, 130, 26);
+		plAgregar.add(txtNombres);
+		txtNombres.setColumns(10);
 		
-		JLabel lblCarnet = new JLabel("Carnet");
-		lblCarnet.setBounds(81, 30, 46, 14);
-		panel_2.add(lblCarnet);
+		txtApellidos = new JTextField();
+		txtApellidos.setText("Apellidos");
+		txtApellidos.setBounds(19, 117, 130, 26);
+		plAgregar.add(txtApellidos);
+		txtApellidos.setColumns(10);
 		
-		tfEliminarEstudiante = new JTextField();
-		tfEliminarEstudiante.setBounds(61, 55, 86, 20);
-		panel_2.add(tfEliminarEstudiante);
-		tfEliminarEstudiante.setColumns(10);
+		txtCarnet = new JTextField();
+		txtCarnet.setText("Carnet");
+		txtCarnet.setBounds(19, 27, 130, 26);
+		plAgregar.add(txtCarnet);
+		txtCarnet.setColumns(10);
+		
+		txtBalance = new JTextField();
+		txtBalance.setText("Balance");
+		txtBalance.setBounds(222, 27, 130, 26);
+		plAgregar.add(txtBalance);
+		txtBalance.setColumns(10);
+		
+		JPanel plEliminar = new JPanel();
+		plEliminar.setBorder(new TitledBorder(null, "Eliminar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		plEliminar.setBounds(393, 170, 278, 175);
+		add(plEliminar);
+		plEliminar.setLayout(null);
 		
 		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(61, 86, 89, 23);
-		panel_2.add(btnEliminar);
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Esto eliminaria al usuario "+Estudiantes[comboBox.getSelectedIndex()]);
+			}
+		});
+		btnEliminar.setBounds(95, 122, 89, 23);
+		plEliminar.add(btnEliminar);
+		
+		Estudiantes = new String[tableVerEstudiante.getModel().getRowCount()];
+		for (int i=0; i< tableVerEstudiante.getModel().getRowCount(); i++){
+			Estudiantes[i] = (String) tableVerEstudiante.getModel().getValueAt(i, 3);
+		}
+		
+		comboBox = new JComboBox(Estudiantes);
+		comboBox.setEditable(true);
+		comboBox.setBounds(24, 34, 233, 27);
+		plEliminar.add(comboBox);
 		
 		JButton btnVerComprasPor = new JButton("Ver Compras por Estudiante");
-		btnVerComprasPor.setBounds(195, 335, 211, 23);
+		btnVerComprasPor.setBounds(459, 357, 211, 23);
 		add(btnVerComprasPor);
 
+	}
+	
+	private void updateData(DBinterface d) throws SQLException{
+		tableVerEstudiante.setModel(d.getEstudiantes());
+		Estudiantes = new String[tableVerEstudiante.getModel().getRowCount()];
+		for (int i=0; i< tableVerEstudiante.getModel().getRowCount(); i++){
+			Estudiantes[i] = (String) tableVerEstudiante.getModel().getValueAt(i, 3);
+		}
+		
+		comboBox.addItem(Estudiantes[Estudiantes.length-1]);
 	}
 }

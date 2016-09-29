@@ -145,8 +145,40 @@ public class DBinterface {
 		return DbUtils.resultSetToTableModel(r);
 	}
 	
+	public TableModel getEstudiantes() throws SQLException{
+		PreparedStatement ps = c.prepareStatement("select * from Clientes;");
+		r = ps.executeQuery();
+		return DbUtils.resultSetToTableModel(r);
+	}
 	
+	public TableModel getEmpleados() throws SQLException{
+		PreparedStatement ps = c.prepareStatement("select * from Empleados;");
+		r = ps.executeQuery();
+		return DbUtils.resultSetToTableModel(r);
+	}
 	
+	public void addEstudiante(int carnet, String nombres, String apellidos, double balance) throws SQLException{
+		PreparedStatement ps = c.prepareStatement("INSERT INTO `Clientes` (`carnet`, `institucion`, `nombres`, `apellidos`, `balance`) VALUES (?, ?, ?, ?, ?);");
+		
+		BigDecimal b = new BigDecimal(balance, MathContext.DECIMAL32).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		ps.setInt(1, carnet);
+		ps.setString(2, institucion);
+		ps.setString(3, nombres);
+		ps.setString(4, apellidos);
+		ps.setBigDecimal(5, b);
+		
+		System.out.println("addEstudiante update returned "+ps.executeUpdate());
+	}
+	
+	public void addEmpleado(long DPI, String nombres, String apellidos) throws SQLException{
+		PreparedStatement ps = c.prepareStatement("INSERT INTO `Empleados` (`nombres`, `apellidos`, `dpi`) VALUES (?, ?, ?);");
+		ps.setString(1, nombres);
+		ps.setString(2, apellidos);
+		BigDecimal b = new BigDecimal(DPI, MathContext.DECIMAL32).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		ps.setBigDecimal(3, b);
+		
+		System.out.println("addEmpleado update returned "+ps.executeUpdate());
+	}
 	/**
 	 * Este metodo debe ser llamado al finaizar el programa para que se cierre la conexion a la DB.
 	 * @throws SQLException
