@@ -38,9 +38,13 @@ public class MainMenu extends JFrame {
 		
 		JPanel ventas = new VentasPanel(d);
 		JPanel admin = new AdminPanel(d);             //Cambiamos metodo por constructor, a cada panel se le da una referencia a DBinterface (d).
+		JPanel estudiante = new EstudiantesPanel();
+		JPanel empleados = new EmpleadosPanel();
 		
 		tabbedPane.addTab("Ventas",null,ventas); 				//Tab que servira para "Cobrar".
 		tabbedPane.addTab("Administracion",null,admin);			//Tab para organizar los productos.
+		tabbedPane.addTab("Estudinates",null,estudiante);		//Tab para ver estudiantes.
+		tabbedPane.addTab("Empleados",null,empleados);          //Tab para ver empleados
 		
 	}
 	
