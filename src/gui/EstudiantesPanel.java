@@ -16,6 +16,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
@@ -71,11 +72,11 @@ public class EstudiantesPanel extends JPanel {
 					
 				}
 				catch(NumberFormatException e1){
-					System.out.println("NumberFormatException: ");
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Carnet solo debe contener numeros.","Error!", JOptionPane.ERROR_MESSAGE);
 				}
 				catch(SQLException e2){
 					System.out.println("SQLException: ");
+					JOptionPane.showMessageDialog(null, "Ver Consola.","Error SQL", JOptionPane.ERROR_MESSAGE);
 					e2.printStackTrace();
 				}
 			}
@@ -117,6 +118,7 @@ public class EstudiantesPanel extends JPanel {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Esto eliminaria al usuario "+Estudiantes[comboBox.getSelectedIndex()]);
+				JOptionPane.showMessageDialog(null, "Esta funcion no existe aun.","¯\\_(ツ)_/¯", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		btnEliminar.setBounds(95, 122, 89, 23);

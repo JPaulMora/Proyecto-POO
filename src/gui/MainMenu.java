@@ -11,21 +11,18 @@ import resources.DBinterface;
 
 public class MainMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private static final int ScreenWidth = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
-	private static final int ScreenHeight = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 	private JPanel contentPane;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	private DBinterface d;
 
-//main() movido a LoginWindow
 
 	/**
 	 * Create the frame.
 	 * @throws SQLException 
 	 */
-	public MainMenu(DBinterface d) throws SQLException {
+	public MainMenu(DBinterface d, int h, int w) throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(ScreenWidth/2-365, ScreenHeight/2-250, 730, 500);
+		setBounds(w/2-365, h/2-250, 730, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

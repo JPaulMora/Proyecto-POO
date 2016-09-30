@@ -112,7 +112,7 @@ public class LoginWindow extends JDialog {
 								//Login fue correcto.. activamos el MainMenu (m) y eliminamos esta ventana (LoginWindow).
 								setVisible(false);
 								
-								MainMenu frame = new MainMenu(db);
+								MainMenu frame = new MainMenu(db,ScreenHeight,ScreenWidth);
 								frame.setVisible(true);
 							}
 						} catch (SQLException e1) {
@@ -159,20 +159,5 @@ public class LoginWindow extends JDialog {
 		
 		//Objetos extras del constructor
 		 this.db = d;
-	}
-	//Getters.. talvez no sean necesarios.
-	/**
-	 * @deprecated
-	 * @return Devuelve el nombre usado para inicar sesion.
-	 */
-	public String getUsername(){
-		return logintextField.getText();
-	}
-	/**
-	 * @deprecated
-	 * @return Devuelve en password usado para inicar sesion.
-	 */
-	public String getPassword(){
-		return String.valueOf(passwordField.getPassword());
 	}
 }

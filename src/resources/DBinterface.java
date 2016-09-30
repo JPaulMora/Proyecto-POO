@@ -23,7 +23,6 @@ public class DBinterface {
 	public DBinterface(){
 		//Constructor (Si, esta vacio y esta bien).
 	}
-	
 
 	/**
 	 * 
@@ -64,25 +63,6 @@ public class DBinterface {
 		return connected;
 	}
 
-	/**
-	 * @deprecated Esta funcion es un ejemplo de un SQL query, Advertencia! este metodo no es seguro, debe cambiarse para usar un PreparedStatement.
-	 * @see getBalance()
-	 * @param sql: Comando SQL a correr
-	 * @return
-	 * @throws SQLException
-	 */
-	public String queryDB(String sql) throws SQLException{
-		s = c.createStatement();
-		r = s.executeQuery(sql);
-		String out = "";
-		
-		while(r.next()){
-			out +=r.getString(6)+"\n";
-		}
-		r.close();
-		s.close();
-		return out;
-	}
 	
 	/**
 	 * 
@@ -112,6 +92,12 @@ public class DBinterface {
 		
 	}
 	
+	/**
+	 * 
+	 * @param carnet Carnet o ID a cambiarle el credito.
+	 * @param d Cantidad que representa el nuevo credito.
+	 * @throws SQLException
+	 */
 	public void setBalance(int carnet, double d) throws SQLException{
 		//Se utiliza PreparedStatement porque este verifica que el comando sea valido para SQL, tambien es mas rapido.
 				PreparedStatement ps = c.prepareStatement("UPDATE `Clientes` SET `balance` = ? WHERE `carnet` = ?;");
@@ -122,6 +108,12 @@ public class DBinterface {
 				System.out.println("setBalance update returned "+ps.executeUpdate());
 	}
 	
+	/**
+	 *  Funcion registra una compra o gasto en la base de datos.
+	 * @param carnet Carnet o ID del comprador
+	 * @param total El total cargado al cliente.
+	 * @throws SQLException
+	 */
 	public void regCompra(int carnet, double total) throws SQLException{
 		PreparedStatement ps = c.prepareStatement("INSERT INTO `Transacciones` (`tran_id`, `comprador`,`institucion`, `monto`, `fecha`) VALUES (NULL, ?, ?, ?, NULL);");
 		
@@ -145,18 +137,36 @@ public class DBinterface {
 		return DbUtils.resultSetToTableModel(r);
 	}
 	
+	/**
+	 * 
+	 * @return Devuelve los Estudiantes registrados en un TableModel para utilizar en un JTable.
+	 * @throws SQLException
+	 */
 	public TableModel getEstudiantes() throws SQLException{
 		PreparedStatement ps = c.prepareStatement("select * from Clientes;");
 		r = ps.executeQuery();
 		return DbUtils.resultSetToTableModel(r);
 	}
 	
+	/**
+	 * 
+	 * @return Devuelve los Empleados registrados en un TableModel para utilizar en un JTable.
+	 * @throws SQLException
+	 */
 	public TableModel getEmpleados() throws SQLException{
 		PreparedStatement ps = c.prepareStatement("select * from Empleados;");
 		r = ps.executeQuery();
 		return DbUtils.resultSetToTableModel(r);
 	}
 	
+	/**
+	 * 
+	 * @param carnet El carnet del estudiante.
+	 * @param nombres Nombre o nombres de la persona.
+	 * @param apellidos Apelldo o Apelldos de la persona.
+	 * @param balance Credito inical con el que se guarda este registro.
+	 * @throws SQLException
+	 */
 	public void addEstudiante(int carnet, String nombres, String apellidos, double balance) throws SQLException{
 		PreparedStatement ps = c.prepareStatement("INSERT INTO `Clientes` (`carnet`, `institucion`, `nombres`, `apellidos`, `balance`) VALUES (?, ?, ?, ?, ?);");
 		
@@ -170,6 +180,13 @@ public class DBinterface {
 		System.out.println("addEstudiante update returned "+ps.executeUpdate());
 	}
 	
+	/**
+	 * 
+	 * @param DPI: Numero de DPI del empleado a agregar a la base de datos.
+	 * @param nombres Nombre o nombres de la persona.
+	 * @param apellidos Apelldo o Apelldos de la persona.
+	 * @throws SQLException 
+	 */
 	public void addEmpleado(long DPI, String nombres, String apellidos) throws SQLException{
 		PreparedStatement ps = c.prepareStatement("INSERT INTO `Empleados` (`nombres`, `apellidos`, `dpi`) VALUES (?, ?, ?);");
 		ps.setString(1, nombres);
