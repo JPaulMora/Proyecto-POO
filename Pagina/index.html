@@ -21,7 +21,10 @@
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-	
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 	<!-- Jquery-UI--->
 	<link href="css/jquery-ui.css" rel="stylesheet">
 
@@ -32,9 +35,88 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script>
+
+        function getQueryParams(qs) {
+            qs = qs.split("+").join(" ");
+            var params = {},
+                    tokens,
+                    re = /[?&]?([^=]+)=([^&]*)/g;
+
+            while (tokens = re.exec(qs)) {
+                params[decodeURIComponent(tokens[1])]
+                        = decodeURIComponent(tokens[2]);
+            }
+
+            return params;
+        }
+        function getNombre(array){
+            //aca iria un query a la base de datos para determinar el nombre del usuario
+            if(array["email"]==1234){
+                return "Ejemplo1";
+            }else if(array["email"]==15246){
+                return "Byron Mota";
+            }else if(array["email"]==151126){
+                return "asdaksmdaskldm";
+            }
+        }
+
+        function getSaldo(array){
+            //aca iria un query a la base de datos para determinar el saldo del usuario
+            if(array["email"]==1234){
+                return "100.00";
+            }else if(array["email"]==15246){
+                return "250.00";
+            }else if(array["email"]==151126){
+                return "50.00";
+            }
+        }
+
+        function getConsumo(array){
+            //aca iria un query a la base de datos para determinar el ultimo consumo del usuario
+            if(array["email"]==1234){
+                return "Unos deliciosos tacos";
+            }else if(array["email"]==15246){
+                return "Latte frío 16oz";
+            }else if(array["email"]==151126){
+                return "Galleta de Chocolate";
+            }
+        }
+
+        var $_GET = getQueryParams(document.location.search);
+        function setValues($_GET){
+            $(document).ready(function(){
+                $("#nombre").text(getNombre($_GET));
+                $("#carnet").text($_GET["email"]);
+                $("#saldo").text(getSaldo($_GET));
+                $("#consumo").text(getConsumo($_GET));
+            });
+        }
+        setValues($_GET);
+
+        function comprar(){
+            var consumoR=$('#comida').val();
+            $("#consumo").text(consumoR);
+            alert("Consumo agregado con exito");
+        }
+
+        $(document).ready(function(){
+            $("#validar").click(function(){
+                comprar();
+                $('.modal').trigger("click");
+
+            });
+        });
+
+
+
+    </script>
+
+
 </head>
 
 <body id="page-top" class="index">
+
 
     <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
@@ -171,16 +253,16 @@
                             <img src="img/portfolio/user.png" class="img-responsive img-centered" alt="">
                             <ul class="list-inline item-details">
                                 <li>Nombre:
-                                    <strong> XXXXXX XXXXX XXXXXX</strong>
+                                    <strong id="nombre">XXXXXXXX</strong>
                                 </li>
                                 <li>Carnet:
-                                    <strong>XXXXXXXX</strong>
+                                    <strong id="carnet">XXXXXXXX</strong>
                                 </li>
                                 <li>Saldo Disponible: 
-                                    <strong>XXXXXXXX</strong>
+                                    <strong id="saldo">XXXXXXXX</strong>
                                 </li>
 								<li>Consumo mas Reciente: 
-                                    <strong>XXXXXXXX</strong>
+                                    <strong id="consumo">XXXXXXXX</strong>
                                 </li>
                             </ul>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
@@ -267,7 +349,10 @@
                                     </div>
                                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                         <div id="gitane">
-                                            <input  type="text" class="form-control" placeholder="Escriba el producto que desea">
+
+                                                <input  type="text" class="form-control" placeholder="Escriba el producto que desea" id="comida" >
+                                                <button  id="validar" class="btn btn-primary center-block" >Comprar</button>
+
 
 
                                         </div>
@@ -361,10 +446,20 @@
 
         }
     </script>
-
+    <script>
+        var tags = [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ];
+        $( "#tags" ).autocomplete({
+            source: function( request, response ) {
+                var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+                response( $.grep( tags, function( item ){
+                    return matcher.test( item );
+                }) );
+            }
+        });
+    </script>
 
     <!-- jQuery -->
-    <script src="vendor/jquery/jquery.js"></script>
+
 
 
 
@@ -373,7 +468,6 @@
 
 
     <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
     <!-- Contact Form JavaScript -->
     <script src="js/jqBootstrapValidation.js"></script>
