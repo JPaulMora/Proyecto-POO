@@ -32,7 +32,38 @@
 </head>
 
 <body id="page-top" class="index">
+<script language="javascript" type="text/javascript">
+    function enviar(){
+        var correcto1;
+        var correcto2;
+        var value1=$("#carnet");
+        var value2=$("#password");
 
+        if(value1.val() != '')
+        {
+            correcto1=true;
+            console.log("im helping");
+        }else{
+            correcto1=false;
+        }
+        if(value2.val() != ''){
+            correcto2=true;
+            console.log("im helping");
+        }else{
+            correcto2=false;
+        }
+        if(correcto1==true & correcto2==true){
+            console.log("it works");
+            // $("#signin").submit();
+        }
+        if(correcto1==false){
+            $("#containterCrn").addClass("has-error");
+        }
+        if(correcto2==false){
+            $("#containterPss").addClass("has-error");
+        }
+    }
+</script>
     <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container">
@@ -71,24 +102,26 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-4 col-lg-offset-4">
-                    <form id="signin" role="form" action="index.html">
-                        <div class="input-group">
+                    <form id="signin" role="form" action="index.html" method="get">
+                        <div class="input-group" id="containerCrn">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                             <input id="carnet" type="number" class="form-control" name="email" value="" placeholder="carnet UVG">
                         </div>
                         <br>
-                        <div class="input-group">
+                        <div class="input-group" id="containerPss">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                             <input id="password" type="password" class="form-control" name="password" value="" placeholder="Contrase;a">
                         </div>
 
-                        <button type="submit" class="btn btn-primary center-block">Login</button>
+                        <button  class="btn btn-primary center-block" onClick='enviar()'>Login</button>
                     </form>
 				</div>
 			</div>
 		</div>
 	</section>
-    
+
+
+
     <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">

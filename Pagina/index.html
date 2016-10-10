@@ -97,6 +97,7 @@
         function comprar(){
             var consumoR=$('#comida').val();
             $("#consumo").text(consumoR);
+            $.("#comida").text("");
             alert("Consumo agregado con exito");
         }
 
@@ -138,7 +139,6 @@
 				</div>
                     <div class="intro-text">
                         <span class="name">Sistema de cobros UVG</span>
-                        
                         <span class="skills">Que vas a comer hoy?</span>
                     </div>
                 </div>
@@ -155,7 +155,6 @@
                     <hr class="star-primary">
                 </div>
             </div>
-			
             <div class="row">
                 <div class="col-sm-4 portfolio-item">
                     <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
@@ -167,7 +166,6 @@
                         <img src="img/portfolio/cooker.png" class="img-responsive" style="padding-left:45px;">
                     </a>
                 </div>
-				
                 <div class="col-sm-4 portfolio-item">
                     <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
@@ -188,8 +186,6 @@
                         <img src="img/portfolio/restaurant-app.png" class="img-responsive" style="padding-left:45px;">
                     </a>
                 </div>
-                
-                
             </div>
         </div>
     </section>
@@ -285,7 +281,7 @@
                     <div class="col-lg-12">
                         <div class="modal-body">
                             <h2>Consumos:</h2>
-							<div class="container" style="padding-l">
+							<div class="container" style="">
 							  <table class="table table-condensed">
 								<thead>
 								  <tr>
@@ -349,12 +345,8 @@
                                     </div>
                                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                         <div id="gitane">
-
                                                 <input  type="text" class="form-control" placeholder="Escriba el producto que desea" id="comida" >
                                                 <button  id="validar" class="btn btn-primary center-block" >Comprar</button>
-
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -391,72 +383,7 @@
     </div>
 
 
-<<script type="text/javascript">
 
-        function validateEvnt(evt) {
-            var theEvent = evt || window.event;
-            var key = theEvent.keyCode || theEvent.which;
-            key = String.fromCharCode( key );
-            var regex = /[0-9]|\./;
-            if( !regex.test(key) ) {
-                theEvent.returnValue = false;
-                if(theEvent.preventDefault) theEvent.preventDefault();
-            }
-        }
-        function validateEvnt2(evt) {
-            var theEvent = evt || window.event;
-            var key = theEvent.keyCode || theEvent.which;
-            key = String.fromCharCode( key );
-            regex = /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/;
-            if( !regex.test(key) ) {
-                theEvent.returnValue = false;
-                if(theEvent.preventDefault) theEvent.preventDefault();
-            }
-        }
-
-        function pagar(){
-            var NoTC=document.getElementById(TarjetaC);
-            var FeTC=document.getElementById(TarjetaExpiracion);
-
-
-
-            if( NoTC!=null){
-                if(NoTC.length>=15){
-                    console.log("IM TRYING THO");
-                    var Cara=true;
-                    document.getElementById("campoNOTC").className += "form-group has-success";
-
-                }
-
-            }else{
-                Cara=false;
-                document.getElementById("campoNOTC").className += "form-group has-error";
-            }
-
-            if( FeTC!=null){
-                if(FeTC.length>=5 ){
-                    var Escudo=true;
-                    document.getElementById("campoFETC").className += "form-group has-success";
-                }
-
-            }else{
-                Escudo=false;
-                document.getElementById("campoFETC").className += "form-group has-error";
-            }
-
-        }
-    </script>
-    <script>
-        var tags = [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ];
-        $( "#tags" ).autocomplete({
-            source: function( request, response ) {
-                var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
-                response( $.grep( tags, function( item ){
-                    return matcher.test( item );
-                }) );
-            }
-        });
-    </script>
 
     <!-- jQuery -->
 
