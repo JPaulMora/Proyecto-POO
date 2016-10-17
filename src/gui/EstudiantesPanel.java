@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import resources.DBinterface;
+import resources.ItemsPor;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.ScrollPaneConstants;

@@ -3,8 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="dependencies/mysql-connector-java-5.0.8-bin.jar"/>
-	<classpathentry kind="lib" path="dependencies/jfreechart-1.0.19-demo.jar"/>
 	<classpathentry kind="lib" path="dependencies/jcommon-1.0.23.jar"/>
 	<classpathentry kind="lib" path="dependencies/rs2xml.jar"/>
+	<classpathentry kind="lib" path="/Users/JP/Documents/Java/Proyecto-POO/dependencies/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import resources.DBinterface;
+import resources.ItemsPor;
 
 import javax.swing.UIManager;
 import java.awt.Color;

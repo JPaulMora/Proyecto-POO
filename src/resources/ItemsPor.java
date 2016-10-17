@@ -1,4 +1,4 @@
-package gui;
+package resources;
 
 import java.sql.SQLException;
 
@@ -7,8 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
-
-import resources.DBinterface;
 
 public class ItemsPor extends JFrame {
 
@@ -41,7 +39,13 @@ public class ItemsPor extends JFrame {
 		contentPane.add(comboBox);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.addTab("Tabla", new TablePane(d,this));
+		tabbedPane.addTab("Grafica", new Chart(d,this));
 		tabbedPane.setBounds(5, 33, 529, 290);
 		contentPane.add(tabbedPane);
+	}
+	
+	public String getItemFromBox(){
+		return comboBox.getSelectedItem().toString();
 	}
 }
