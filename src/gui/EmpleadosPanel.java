@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 public class EmpleadosPanel extends JPanel {
 	private JTable tableVerEmpleados;
@@ -125,6 +126,18 @@ public class EmpleadosPanel extends JPanel {
 		pnEliminar.add(comboBox);
 		
 		JButton btnVerVentasPor = new JButton("Ver Ventas por Empleado");
+		btnVerVentasPor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame Items;
+				try {
+					Items = new ItemsPor(d,0);
+					Items.setVisible(true);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		btnVerVentasPor.setBounds(459, 358, 212, 23);
 		add(btnVerVentasPor);
 

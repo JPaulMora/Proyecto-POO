@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -135,6 +137,18 @@ public class EstudiantesPanel extends JPanel {
 		plEliminar.add(comboBox);
 		
 		JButton btnVerComprasPor = new JButton("Ver Compras por Estudiante");
+		btnVerComprasPor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame Items;
+				try {
+					Items = new ItemsPor(d,1);
+					Items.setVisible(true);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		btnVerComprasPor.setBounds(459, 357, 211, 23);
 		add(btnVerComprasPor);
 

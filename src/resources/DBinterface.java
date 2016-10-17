@@ -16,13 +16,6 @@ public class DBinterface {
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	
-	/**
-	 * Constructor, no recibe ningun parametro.
-	 */
-	public DBinterface(){
-		//Constructor (Si, esta vacio y esta bien).
-	}
 
 	/**
 	 * 
@@ -148,6 +141,30 @@ public class DBinterface {
 		return DbUtils.resultSetToTableModel(r);
 	}
 	
+	
+	public String[] getAsArray(int mode) throws SQLException{
+		PreparedStatement ps = null;
+		if (mode == 1){
+			ps = c.prepareStatement("select nombres from Clientes;");
+		}else if (mode == 0){
+			ps = c.prepareStatement("select nombres from Empleados;");
+		}
+		System.out.println(ps.toString());
+		
+		r = ps.executeQuery();
+		int rowcount = 0;
+		while (r.next()) {
+		  rowcount++;
+		}
+		String[] sts = new String[rowcount];
+		r.absolute(1);
+		
+		for (int i=0; i < rowcount; i++){
+			sts[i] = r.getString(1);
+			r.next();
+		}
+		return sts;
+	}
 	/**
 	 * 
 	 * @return Devuelve los Empleados registrados en un TableModel para utilizar en un JTable.
