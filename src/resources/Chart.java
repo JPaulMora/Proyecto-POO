@@ -4,9 +4,12 @@ import org.jfree.data.xy.*;
 import org.jfree.chart.plot.PlotOrientation;
 import java.awt.EventQueue;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableModel;
 
 public class Chart extends JPanel {
 	/**
@@ -14,41 +17,46 @@ public class Chart extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	BufferedImage grafica = null;
+	private DBinterface d;
+	private int mode;
+	private ItemsPor i;
+	private TableModel data;
 
-	public BufferedImage creaImagen()
+	public Chart(DBinterface d,ItemsPor i,int mode) {
+		setBounds(0,0,530, 310);
+		setLayout(null);
+		this.i = i;
+		this.mode = mode;
+		this.d = d;
+		}
+	
+	public BufferedImage creaImagen() throws NumberFormatException, SQLException
     {
+		String cname;
+		if (mode == 1){
+			cname = "Compras";
+			data = d.getComprasPorCliente(Integer.parseInt(i.getItemFromBox().split(" ")[i.getItemFromBox().split(" ").length-1]));
+		}else{
+			cname = "Ventas";
+			data = d.getVentasPorEmp(Double.parseDouble(i.getItemFromBox().split(" ")[i.getItemFromBox().split(" ").length-1]));
+		}
         XYSeries series = new XYSeries("Data");
-        series.add(1, 4);
-        series.add(2, 3);
-        series.add(3, 2);
-        series.add(4, 3);
-        series.add(5, 5);
-        series.add(6, 2);
-        series.add(7, 8);
+       for (int i=0; i < data.getRowCount(); i++){
+    	   series.add(Double.parseDouble(data.getValueAt(i, 0).toString()),Double.parseDouble(data.getValueAt(i, 1).toString()));
+        }
+        
         XYDataset Datos= new XYSeriesCollection(series);
-        JFreeChart chart = ChartFactory.createXYLineChart ("Compras de Estudiantes","Estudiantes","Compras",Datos,PlotOrientation.VERTICAL,false,false,true);
+        JFreeChart chart = ChartFactory.createXYLineChart (i.getItemFromBox(),"Transaccion",cname,Datos,PlotOrientation.VERTICAL,false,false,true);
         BufferedImage image = chart.createBufferedImage(510, 250);
         return image;
         }
 	
 	public void paint(java.awt.Graphics g) {
-        if(grafica == null){
-        	grafica = this.creaImagen();
-        }
-        g.drawImage(grafica,0,0,null);
-    }
-	
-	
-	public Chart(DBinterface d,ItemsPor i) {
-		setBounds(0,0,530, 310);
-		setLayout(null);
-//		XYSeries series = new XYSeries("titulo de la serie");
-//        series.add(1, 23);
-//        series.add(2, 34);
-//        series.add(3, 51);
-//        series.add(4, 67);
-//        series.add(5, 89);
-//        series.add(6, 121);
-//        series.add(7, 137);
+        try {
+			grafica = this.creaImagen();
+		} catch (NumberFormatException | SQLException e) {
+			e.printStackTrace();
 		}
+        g.drawImage(grafica,0,0,null);
+    }	
 }

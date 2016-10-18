@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JComboBox;
 
 public class VentasPanel extends JPanel {
 	/**
@@ -33,6 +34,7 @@ public class VentasPanel extends JPanel {
 	private final String[] carroNames = {"producto","precio"};
 	private double total = 0;
 	private DecimalFormat dinero = new DecimalFormat("Sub-Total: Q####.##");
+	JComboBox comboBox;
 
 
 	/**
@@ -46,13 +48,13 @@ public VentasPanel(DBinterface d) throws SQLException {
 		setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Productos");
-		lblNewLabel.setBounds(27, 35, 74, 16);
+		lblNewLabel.setBounds(27, 53, 74, 16);
 		this.add(lblNewLabel);
 		
 		//Tabla de Productos
 		
 		JScrollPane spProductos = new JScrollPane();
-		spProductos.setBounds(37, 63, 643, 106);
+		spProductos.setBounds(37, 81, 643, 106);
 		add(spProductos);
 		
 		tblProductos = new JTable(d.getProductos());
@@ -65,7 +67,7 @@ public VentasPanel(DBinterface d) throws SQLException {
 		
 		
 		JButton btnAgregarCargo = new JButton("Agregar Cargo");
-		btnAgregarCargo.setBounds(558, 179, 134, 29);
+		btnAgregarCargo.setBounds(558, 194, 134, 29);
 		
 		JButton btnRemoverCargo = new JButton("Remover Cargo");
 		btnRemoverCargo.setBounds(558, 321, 139, 29);
@@ -83,7 +85,7 @@ public VentasPanel(DBinterface d) throws SQLException {
 		this.add(btnAgregarCargo);
 		
 		JLabel lblCarrito = new JLabel("Cuenta");
-		lblCarrito.setBounds(27, 192, 58, 16);
+		lblCarrito.setBounds(27, 199, 58, 16);
 		this.add(lblCarrito);
 		
 		//DefaultTableModel model = new DefaultTableModel();
@@ -132,7 +134,7 @@ public VentasPanel(DBinterface d) throws SQLException {
 						JOptionPane.showMessageDialog(null, "Error! Saldo insuficiente.");
 					}else{
 						d.setBalance(carnet,Balance-total);
-						d.regCompra(carnet, total);
+						d.regCompra(carnet, total,Double.parseDouble(comboBox.getSelectedItem().toString().split(" ")[comboBox.getSelectedItem().toString().split(" ").length-1]));
 						String[][] a = {};
 						tblCarro.setModel(new DefaultTableModel(a,carroNames));
 						txtCarnet.setText("Carnet");
@@ -161,10 +163,14 @@ public VentasPanel(DBinterface d) throws SQLException {
 		
 		
 		JScrollPane spCuentas = new JScrollPane();
-		spCuentas.setBounds(37, 220, 643, 96);
+		spCuentas.setBounds(37, 227, 643, 89);
 		add(spCuentas);
 		
 		spCuentas.setViewportView(tblCarro);
+		
+		comboBox = new JComboBox(d.getAsArray(0));
+		comboBox.setBounds(6, 6, 270, 27);
+		add(comboBox);
 		
 	   }
 
@@ -187,5 +193,4 @@ public VentasPanel(DBinterface d) throws SQLException {
 			}
 			return nes;
 		}
-		
 }

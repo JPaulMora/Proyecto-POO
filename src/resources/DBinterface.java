@@ -107,18 +107,35 @@ public class DBinterface {
 	 * @param total El total cargado al cliente.
 	 * @throws SQLException
 	 */
-	public void regCompra(int carnet, double total) throws SQLException{
-		PreparedStatement ps = c.prepareStatement("INSERT INTO `Transacciones` (`tran_id`, `comprador`,`institucion`, `monto`, `fecha`) VALUES (NULL, ?, ?, ?, NULL);");
+	public void regCompra(int carnet, double total,double dpi) throws SQLException{
+		PreparedStatement ps = c.prepareStatement("INSERT INTO `Transacciones` (`tran_id`, `comprador`,`vendedor`,`institucion`, `monto`, `fecha`) VALUES (NULL, ?, ?, ?, ?, NULL);");
 		
 		BigDecimal b = new BigDecimal(total, MathContext.DECIMAL32).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		BigDecimal d = new BigDecimal(dpi, MathContext.DECIMAL32).setScale(0, BigDecimal.ROUND_HALF_EVEN);
 		ps.setInt(1, carnet);
-		ps.setString(2, institucion);
-		ps.setBigDecimal(3, b);
-		//System.out.println(ps.toString());
+		ps.setBigDecimal(2, d);
+		ps.setString(3, institucion);
+		ps.setBigDecimal(4, b);
 		
 		System.out.println("regCompra update returned "+ps.executeUpdate());
 	}
 
+	public TableModel getComprasPorCliente(int carnet) throws SQLException{
+		PreparedStatement ps = c.prepareStatement("SELECT tran_id,monto FROM `Transacciones` WHERE comprador = ?;");
+		ps.setInt(1, carnet);
+		r = ps.executeQuery();
+		TableModel tb = DbUtils.resultSetToTableModel(r);
+		return tb;
+	}
+	
+	public TableModel getVentasPorEmp(double dpi) throws SQLException{
+		PreparedStatement ps = c.prepareStatement("SELECT tran_id,monto FROM `Transacciones` WHERE vendedor = ?;");
+		BigDecimal d = new BigDecimal(dpi, MathContext.DECIMAL32).setScale(0, BigDecimal.ROUND_HALF_EVEN);
+		ps.setBigDecimal(1, d);
+		r = ps.executeQuery();
+		return DbUtils.resultSetToTableModel(r);
+	}
+	
 	/**
 	 * 
 	 * @return Devuelve los Productos registrados en un TableModel para utilizar en un JTable.
@@ -145,11 +162,10 @@ public class DBinterface {
 	public String[] getAsArray(int mode) throws SQLException{
 		PreparedStatement ps = null;
 		if (mode == 1){
-			ps = c.prepareStatement("select nombres from Clientes;");
+			ps = c.prepareStatement("select nombres,carnet from Clientes;");
 		}else if (mode == 0){
-			ps = c.prepareStatement("select nombres from Empleados;");
+			ps = c.prepareStatement("select nombres,DPI from Empleados;");
 		}
-		System.out.println(ps.toString());
 		
 		r = ps.executeQuery();
 		int rowcount = 0;
@@ -160,7 +176,7 @@ public class DBinterface {
 		r.absolute(1);
 		
 		for (int i=0; i < rowcount; i++){
-			sts[i] = r.getString(1);
+			sts[i] = r.getString(1)+" "+r.getString(2);
 			r.next();
 		}
 		return sts;
