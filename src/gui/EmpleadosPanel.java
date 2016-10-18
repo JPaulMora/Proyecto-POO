@@ -121,6 +121,7 @@ public class EmpleadosPanel extends JPanel {
 			Empleados[i] = (String) tableVerEmpleados.getModel().getValueAt(i, 1);
 		}
 		
+		
 		comboBox = new JComboBox(Empleados);
 		comboBox.setEditable(true);
 		comboBox.setBounds(24, 33, 233, 27);

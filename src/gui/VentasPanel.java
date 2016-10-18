@@ -35,6 +35,7 @@ public class VentasPanel extends JPanel {
 	private double total = 0;
 	private DecimalFormat dinero = new DecimalFormat("Sub-Total: Q####.##");
 	JComboBox comboBox;
+	private DBinterface d;
 
 
 	/**
@@ -43,7 +44,7 @@ public class VentasPanel extends JPanel {
 	 */
 
 public VentasPanel(DBinterface d) throws SQLException {	   
-
+		this.d = d;
 		this.setBounds(0, 0, 725, 410);
 		setLayout(null);
 		
@@ -104,7 +105,7 @@ public VentasPanel(DBinterface d) throws SQLException {
 				if (total == 0){
 					btnRemoverCargo.setEnabled(false);
 				}
-				tblCarro.setModel(new DefaultTableModel(carro,carroNames));
+				tblCarro.setModel(d.setNotEditable(new DefaultTableModel(carro,carroNames)));
 				//tblCarro.invalidate();
 				//System.out.println(tblCarro.getSelectedRow()+" "+tblCarro.getModel().getRowCount());
 			}
@@ -177,7 +178,7 @@ public VentasPanel(DBinterface d) throws SQLException {
 		private String[][] addRow(String[] r){
 			String[][] a = Arrays.copyOf(carro, carro.length +1);
 			a[a.length-1] = r;
-			tblCarro.setModel(new DefaultTableModel(a,carroNames));
+			tblCarro.setModel(d.setNotEditable(new DefaultTableModel(a,carroNames)));
 			return a;
 		}
 		

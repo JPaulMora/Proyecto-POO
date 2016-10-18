@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.*;
 
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 import net.proteanit.sql.DbUtils;
@@ -124,8 +125,8 @@ public class DBinterface {
 		PreparedStatement ps = c.prepareStatement("SELECT tran_id,monto FROM `Transacciones` WHERE comprador = ?;");
 		ps.setInt(1, carnet);
 		r = ps.executeQuery();
-		TableModel tb = DbUtils.resultSetToTableModel(r);
-		return tb;
+		
+		return setNotEditable(DbUtils.resultSetToTableModel(r));
 	}
 	
 	public TableModel getVentasPorEmp(double dpi) throws SQLException{
@@ -133,7 +134,7 @@ public class DBinterface {
 		BigDecimal d = new BigDecimal(dpi, MathContext.DECIMAL32).setScale(0, BigDecimal.ROUND_HALF_EVEN);
 		ps.setBigDecimal(1, d);
 		r = ps.executeQuery();
-		return DbUtils.resultSetToTableModel(r);
+		return setNotEditable(DbUtils.resultSetToTableModel(r));
 	}
 	
 	/**
@@ -144,7 +145,7 @@ public class DBinterface {
 	public TableModel getProductos() throws SQLException{
 		PreparedStatement ps = c.prepareStatement("select * from Productos;");
 		r = ps.executeQuery();
-		return DbUtils.resultSetToTableModel(r);
+		return setNotEditable(DbUtils.resultSetToTableModel(r));
 	}
 	
 	/**
@@ -155,7 +156,7 @@ public class DBinterface {
 	public TableModel getEstudiantes() throws SQLException{
 		PreparedStatement ps = c.prepareStatement("select * from Clientes;");
 		r = ps.executeQuery();
-		return DbUtils.resultSetToTableModel(r);
+		return setNotEditable(DbUtils.resultSetToTableModel(r));
 	}
 	
 	
@@ -189,7 +190,7 @@ public class DBinterface {
 	public TableModel getEmpleados() throws SQLException{
 		PreparedStatement ps = c.prepareStatement("select * from Empleados;");
 		r = ps.executeQuery();
-		return DbUtils.resultSetToTableModel(r);
+		return setNotEditable(DbUtils.resultSetToTableModel(r));
 	}
 	
 	/**
@@ -229,6 +230,16 @@ public class DBinterface {
 		
 		System.out.println("addEmpleado update returned "+ps.executeUpdate());
 	}
+	
+	/**
+	 * 
+	 * @param m TableModel con la informacion y formato requerido
+	 * @return Devuelve una copia del TableModel recibido pero que no permite edicion.
+	 */
+	public TableModel setNotEditable(TableModel m){
+		return new NotEditableModel(m);
+	}
+	
 	/**
 	 * Este metodo debe ser llamado al finaizar el programa para que se cierre la conexion a la DB.
 	 * @throws SQLException
