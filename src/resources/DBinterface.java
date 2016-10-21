@@ -233,6 +233,25 @@ public class DBinterface {
 	
 	/**
 	 * 
+	 * @param producto Nombre del producto
+	 * @param descripcion Descripcion del producto
+	 * @param precio Valor de pago por producto
+	 * @throws SQLException
+	 */
+	public void addProducto(String producto, String descripcion, double precio) throws SQLException{
+		PreparedStatement ps = c.prepareStatement("INSERT INTO `Productos` (`producto`, `descripcion`, `precio`) VALUES (?, ?, ?);");
+		
+		BigDecimal c = new BigDecimal(precio, MathContext.DECIMAL32).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		ps.setString(1, producto);
+		ps.setString(2, descripcion);
+		ps.setDouble(3, precio);
+		ps.setBigDecimal(5, c);
+		
+		System.out.println("addProducto update returned "+ps.executeUpdate());
+	}
+	
+	/**
+	 * 
 	 * @param m TableModel con la informacion y formato requerido
 	 * @return Devuelve una copia del TableModel recibido pero que no permite edicion.
 	 */
