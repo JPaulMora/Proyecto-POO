@@ -32,6 +32,7 @@ public class LoginWindow extends JDialog {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	private static final int ScreenWidth = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
 	private static final int ScreenHeight = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
+	private LoginWindow lw = this;
 	
 	/**
 	 * Create the dialog.
@@ -48,7 +49,6 @@ public class LoginWindow extends JDialog {
 				try {
 					LoginWindow logWin = new LoginWindow(ScreenWidth, ScreenHeight,db);
 					logWin.setVisible(true);
-					//frame.setVisible(true);    //TODO debug, sirve para que no use DB
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -112,7 +112,7 @@ public class LoginWindow extends JDialog {
 								//Login fue correcto.. activamos el MainMenu (m) y eliminamos esta ventana (LoginWindow).
 								setVisible(false);
 								
-								MainMenu frame = new MainMenu(db,ScreenHeight,ScreenWidth);
+								MainMenu frame = new MainMenu(db,lw,ScreenHeight,ScreenWidth);
 								frame.setVisible(true);
 							}
 						} catch (SQLException e1) {
@@ -159,5 +159,10 @@ public class LoginWindow extends JDialog {
 		
 		//Objetos extras del constructor
 		 this.db = d;
+	}
+	
+	public void reLogin(){
+		setVisible(true);
+		passwordField.setText("");
 	}
 }

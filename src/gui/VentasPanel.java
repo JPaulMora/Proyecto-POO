@@ -132,12 +132,14 @@ public VentasPanel(DBinterface d) throws SQLException {
 					carnet = Integer.parseInt(txtCarnet.getText());
 					double Balance = d.getBalance(carnet);
 					if (Balance < total){
-						JOptionPane.showMessageDialog(null, "Error! Saldo insuficiente.");
+						JOptionPane.showMessageDialog(null, "Error! Saldo insuficiente.","Error!", JOptionPane.ERROR_MESSAGE);
 					}else{
 						d.setBalance(carnet,Balance-total);
 						d.regCompra(carnet, total,Double.parseDouble(comboBox.getSelectedItem().toString().split(" ")[comboBox.getSelectedItem().toString().split(" ").length-1]));
-						String[][] a = {};
-						tblCarro.setModel(new DefaultTableModel(a,carroNames));
+						carro = new String[0][2];
+						total = 0;
+						lblSubtotal.setText(dinero.format(total));
+						tblCarro.setModel(new DefaultTableModel(carro,carroNames));
 						txtCarnet.setText("Carnet");
 					}
 					
@@ -147,6 +149,8 @@ public VentasPanel(DBinterface d) throws SQLException {
 				}catch(SQLException e2){
 					JOptionPane.showMessageDialog(null, "Error de SQL");
 					e2.printStackTrace();
+				}catch(java.lang.IndexOutOfBoundsException e2){
+					
 				}
 				
 			}

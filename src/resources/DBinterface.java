@@ -159,7 +159,12 @@ public class DBinterface {
 		return setNotEditable(DbUtils.resultSetToTableModel(r));
 	}
 	
-	
+	/**
+	 * 
+	 * @param mode: Mode 1 = estudiantes, Mode 0 = Empleados.
+	 * @return
+	 * @throws SQLException
+	 */
 	public String[] getAsArray(int mode) throws SQLException{
 		PreparedStatement ps = null;
 		if (mode == 1){
@@ -244,8 +249,7 @@ public class DBinterface {
 		BigDecimal c = new BigDecimal(precio, MathContext.DECIMAL32).setScale(2, BigDecimal.ROUND_HALF_EVEN);
 		ps.setString(1, producto);
 		ps.setString(2, descripcion);
-		ps.setDouble(3, precio);
-		ps.setBigDecimal(5, c);
+		ps.setBigDecimal(3, c);
 		
 		System.out.println("addProducto update returned "+ps.executeUpdate());
 	}
@@ -265,8 +269,12 @@ public class DBinterface {
 	 */
 	public void closeDB() throws SQLException{
 		//cerrar ResultSet y Statement en caso estuviesen abiertos.
-		r.close();		
-		s.close();
+		if(r != null){
+			r.close();
+		}
+		if (s != null){
+			s.close();
+		}
 		
 		//cerrar conexion.
 		c.close();

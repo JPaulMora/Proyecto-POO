@@ -8,21 +8,25 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 import resources.DBinterface;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	private DBinterface d;
+
+	
 
 
 	/**
 	 * Create the frame.
 	 * @throws SQLException 
 	 */
-	public MainMenu(DBinterface d, int h, int w) throws SQLException {
+	public MainMenu(DBinterface d,LoginWindow lw, int h, int w) throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(w/2-365, h/2-250, 730, 500);
+		setBounds(w/2-365, h/2-250, 730, 530);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -30,7 +34,7 @@ public class MainMenu extends JFrame {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setToolTipText("Test");
-		tabbedPane.setBounds(0, 19, 730, 459);
+		tabbedPane.setBounds(0, 18, 730, 459);
 		contentPane.add(tabbedPane);
 		
 		JPanel ventas = new VentasPanel(d);         
@@ -43,7 +47,25 @@ public class MainMenu extends JFrame {
 		tabbedPane.addTab("Empleados",null,empleados);          //Tab para ver empleados.
 		tabbedPane.addTab("Productos",null,productos);			//Tab para organizar los productos.
 		
+		JButton btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					logOut(d,lw);
+				} catch (SQLException e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnCerrarSesion.setBounds(548, 473, 164, 29);
+		contentPane.add(btnCerrarSesion);
+		
 	}
 	
-
+	private void logOut(DBinterface d, LoginWindow lw) throws SQLException{
+		d.closeDB();
+		lw.reLogin();
+		dispose();
+	}
 }

@@ -127,11 +127,14 @@ public class EstudiantesPanel extends JPanel {
 		btnEliminar.setBounds(95, 122, 89, 23);
 		plEliminar.add(btnEliminar);
 		
+		//Inicializar array con los nombres de los estuidiantes.
+		
 		Estudiantes = new String[tableVerEstudiante.getModel().getRowCount()];
 		for (int i=0; i< tableVerEstudiante.getModel().getRowCount(); i++){
 			Estudiantes[i] = (String) tableVerEstudiante.getModel().getValueAt(i, 3);
 		}
 		
+		//Una vez inicializado el array podemos creal el JComboBox, de lo contrario nos da NullPointerException.
 		comboBox = new JComboBox(Estudiantes);
 		comboBox.setEditable(true);
 		comboBox.setBounds(24, 34, 233, 27);
@@ -156,7 +159,9 @@ public class EstudiantesPanel extends JPanel {
 	}
 	
 	private void updateData(DBinterface d) throws SQLException{
+		//Actualizar tabla
 		tableVerEstudiante.setModel(d.getEstudiantes());
+		//Actualizar array (que actualiza comboBox del menu eliminar)
 		Estudiantes = new String[tableVerEstudiante.getModel().getRowCount()];
 		for (int i=0; i< tableVerEstudiante.getModel().getRowCount(); i++){
 			Estudiantes[i] = (String) tableVerEstudiante.getModel().getValueAt(i, 3);

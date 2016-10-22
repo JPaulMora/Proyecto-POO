@@ -30,13 +30,13 @@ public class ProductosPanel extends JPanel {
 	private JTextField tfDescripcion;
 	private JTextField tfPrecio;
 	private String[] Productos;
-	private JComboBox comboBox;
+	private JComboBox comboBoxProductos;
 
 	/**
 	 * Create the panel.
 	 */
 	public ProductosPanel(DBinterface d) throws SQLException{
-		this.setBounds(285, 83, 699, 418);
+		setBounds(285, 83, 699, 418);
 		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -46,21 +46,7 @@ public class ProductosPanel extends JPanel {
 		add(scrollPane);
 		
 		table = new JTable(d.getProductos());
-		/**
-		table.setModel(new DefaultTableModel( // revisar ******************************
-			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"id", "producto", "descripcion", "precio"
-			}
-		));                                 // hasta aqui *******************************/
+
 		scrollPane.setViewportView(table);
 		
 		JPanel panel = new JPanel();
@@ -98,21 +84,42 @@ public class ProductosPanel extends JPanel {
 		panel_1.setLayout(null);
 		
 		tfProducto = new JTextField();
-		tfProducto.setBounds(20, 29, 108, 20);
+		tfProducto.setText("Producto");
+		tfProducto.setBounds(20, 29, 297, 20);
 		panel_1.add(tfProducto);
 		tfProducto.setColumns(10);
 		
 		tfDescripcion = new JTextField();
-		tfDescripcion.setBounds(20, 70, 108, 20);
+		tfDescripcion.setText("Descripcion");
+		tfDescripcion.setBounds(20, 70, 297, 20);
 		panel_1.add(tfDescripcion);
 		tfDescripcion.setColumns(10);
 		
 		tfPrecio = new JTextField();
+		tfPrecio.setText("Precio");
 		tfPrecio.setBounds(20, 113, 108, 20);
 		panel_1.add(tfPrecio);
 		tfPrecio.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Agregar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					double b = Double.parseDouble(tfPrecio.getText());
+					d.addProducto(tfProducto.getText(),tfDescripcion.getText(), b);
+					updateData(d);
+					
+				}
+				catch(NumberFormatException e1){
+					JOptionPane.showMessageDialog(null, "Precio solo debe contener numeros.","Error!", JOptionPane.ERROR_MESSAGE);
+				}
+				catch(SQLException e2){
+					System.out.println("SQLException: ");
+					JOptionPane.showMessageDialog(null, "Ver Consola.","Error SQL", JOptionPane.ERROR_MESSAGE);
+					e2.printStackTrace();
+				}
+			}
+		});
 		btnNewButton.setBounds(197, 112, 89, 23);
 		panel_1.add(btnNewButton);
 		
@@ -122,36 +129,46 @@ public class ProductosPanel extends JPanel {
 		add(panel_2);
 		panel_2.setLayout(null);
 		
-		JComboBox comboBoxProductos = new JComboBox();
-		comboBoxProductos.setBounds(62, 38, 220, 20);
-		panel_2.add(comboBoxProductos);
-		
+		//Boton eliminar
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Esto eliminaria al usuario "+Productos[comboBox.getSelectedIndex()]);
+				System.out.println("Esto eliminaria al usuario "+Productos[comboBoxProductos.getSelectedIndex()]);
 				JOptionPane.showMessageDialog(null, "Esta funcion no existe aun.","¯\\_(ツ)_/¯", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		btnEliminar.setBounds(118, 109, 89, 23);
 		panel_2.add(btnEliminar);
-		/**
+		
+		//Inicializar array con los nombres de los productos.
+		
 		Productos = new String[table.getModel().getRowCount()];
 		for (int i=0; i< table.getModel().getRowCount(); i++){
-			Productos[i] = (String) table.getModel().getValueAt(i, 3);
-		}*/
-		JButton btnNewButton_1 = new JButton("Unidades Vendidas por Producto");
-		btnNewButton_1.setBounds(418, 361, 216, 23);
-		add(btnNewButton_1);
+			Productos[i] = (String) table.getModel().getValueAt(i, 1);
+		}
+		
+		//Una vez inicializado el array podemos creal el JComboBox, de lo contrario nos da NullPointerException.
+		
+		comboBoxProductos = new JComboBox(Productos);
+		comboBoxProductos.setBounds(62, 38, 220, 20);
+		panel_2.add(comboBoxProductos);
 	   }
 	
+	
+	/**
+	 * Este metodo actualiza los datos que se muestran 
+	 * @param d Instancia de DBinterface
+	 * @throws SQLException
+	 */
 	private void updateData(DBinterface d) throws SQLException{
-		table.setModel(d.getEstudiantes());
+		//Actualizar tabla
+		table.setModel(d.getProductos());
+		//Actualizar array (que actualiza comboBox del menu eliminar)
 		Productos = new String[table.getModel().getRowCount()];
 		for (int i=0; i< table.getModel().getRowCount(); i++){
 			Productos[i] = (String) table.getModel().getValueAt(i, 3);
 		}
 		
-		comboBox.addItem(Productos[Productos.length-1]);
+		comboBoxProductos.addItem(Productos[Productos.length-1]);
 	}
 }
