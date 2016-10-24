@@ -1,5 +1,22 @@
 <?php
-include('session.php');
+include 'database.php';
+$pdo = Database::connect();
+$sql = 'SELECT * FROM estudiantes WHERE id=$Nombre';
+foreach ($pdo->query($sql) as $row) {
+    echo '<tr>';
+    echo '<td>'. $row['name'] . '</td>';
+    echo '<td>'. $row['email'] . '</td>';
+    echo '<td>'. $row['mobile'] . '</td>';
+    echo '<td width=250>';
+    echo '<a class="btn" href="read.php?id='.$row['id'].'">Read</a>';
+    echo '&nbsp;';
+    echo '<a class="btn btn-success" href="update.php?id='.$row['id'].'">Update</a>';
+    echo '&nbsp;';
+    echo '<a class="btn btn-danger" href="delete.php?id='.$row['id'].'">Delete</a>';
+    echo '</td>';
+    echo '</tr>';
+}
+Database::disconnect();
 ?>
 
 <!DOCTYPE html>
@@ -186,6 +203,16 @@ include('session.php');
         </div>
     </div>
 </section>
+<div class="container-fluid" style="padding-bottom: 30px">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4">
+            <button  style="width:100%; background-color:#2aa22a" id="Salir" class="btn btn-primary center-block" ><a style="text-decoration: none; color:white; " href = "logout.php">Salir</a></button>
+
+        </div>
+
+    </div>
+
+</div>
 
 <!-- Footer -->
 <footer class="text-center">
@@ -289,24 +316,18 @@ include('session.php');
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>10/10/10</td>
-                                    <td>Cappuccino 12</td>
-                                    <td>14.0</td>
-                                    <td>GTN</td>
-                                </tr>
-                                <tr>
-                                    <td>00/00/00</td>
-                                    <td>Taco</td>
-                                    <td>5</td>
-                                    <td>GOG</td>
-                                </tr>
-                                <tr>
-                                    <td>00/00/00</td>
-                                    <td>Burrito</td>
-                                    <td>7.0</td>
-                                    <td>BGL</td>
-                                </tr>
+                                <?php
+                                include 'database.php';
+                                $pdo = Database::connect();
+                                $sql = 'SELECT * FROM customers ORDER BY id DESC';
+                                foreach ($pdo->query($sql) as $row) {
+                                    echo '<tr>';
+                                    echo '<td>'. $row['name'] . '</td>';
+                                    echo '<td>'. $row['email'] . '</td>';
+                                    echo '<td>'. $row['mobile'] . '</td>';
+                                    echo '</tr>';
+                                }
+                                ?>
                                 </tbody>
                             </table>
                         </div>
