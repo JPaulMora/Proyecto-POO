@@ -1,61 +1,38 @@
 package gui;
 
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import resources.DBinterface;
-import resources.ItemsPor;
-
-import javax.swing.UIManager;
-import java.awt.Color;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import javax.swing.border.LineBorder;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.border.TitledBorder;
 
-public class EmpleadosPanel extends JPanel {
-	private JTable tableVerEmpleados;
-	private String[] Empleados;
-	private JComboBox comboBox;
+import resources.DBinterface;
+
+public class EmpleadosPanel extends BasePanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtDPI;
 	private JTextField txtNombres;
 	private JTextField txtApellidos;
-
+	
 	/**
-	 * Create the panel.
-	 * @throws SQLException 
+	 * 
+	 * @param d Instancia de DBinterface
+	 * @throws SQLException
 	 */
+	
 	public EmpleadosPanel(DBinterface d) throws SQLException {
-		setLayout(null);
+		super(d, new String[]{"Empleados","Ventas"}, 0);
 		
-		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Ver Empleados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		setBounds(10, 11, 688, 403);
-
-		setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 27, 661, 131);
-		add(scrollPane);
-		
-		tableVerEmpleados = new JTable();
-		tableVerEmpleados.setModel(d.getEmpleados());
-		scrollPane.setViewportView(tableVerEmpleados);
-		
+		//Sub-panel que agrega empleados
 		JPanel pnAgregar = new JPanel();
-		pnAgregar.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Agregar", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnAgregar.setBorder(new TitledBorder(null, "Agregar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnAgregar.setBounds(10, 170, 371, 175);
 		add(pnAgregar);
 		pnAgregar.setLayout(null);
@@ -66,7 +43,7 @@ public class EmpleadosPanel extends JPanel {
 				try{
 					long b = Long.parseLong(txtDPI.getText());
 					d.addEmpleado(b, txtNombres.getText(), txtApellidos.getText());
-					updateData(d);
+					updateData();
 					
 				}
 				catch(NumberFormatException e1){
@@ -99,59 +76,21 @@ public class EmpleadosPanel extends JPanel {
 		txtApellidos.setColumns(10);
 		txtApellidos.setBounds(19, 117, 130, 26);
 		pnAgregar.add(txtApellidos);
-		
-		JPanel pnEliminar = new JPanel();
-		pnEliminar.setBorder(new TitledBorder(null, "Eliminar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnEliminar.setBounds(393, 170, 278, 175);
-		add(pnEliminar);
-		pnEliminar.setLayout(null);
-		
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Esto eliminaria al empleado "+Empleados[comboBox.getSelectedIndex()]);
-				JOptionPane.showMessageDialog(null, "Esta funcion no existe aun.","¯\\_(ツ)_/¯", JOptionPane.WARNING_MESSAGE);
-			}
-		});
-		btnEliminar.setBounds(95, 122, 89, 23);
-		pnEliminar.add(btnEliminar);
-		
-		Empleados = new String[tableVerEmpleados.getModel().getRowCount()];
-		for (int i=0; i< tableVerEmpleados.getModel().getRowCount(); i++){
-			Empleados[i] = (String) tableVerEmpleados.getModel().getValueAt(i, 1);
-		}
-		
-		
-		comboBox = new JComboBox(Empleados);
-		comboBox.setEditable(true);
-		comboBox.setBounds(24, 33, 233, 27);
-		pnEliminar.add(comboBox);
-		
-		JButton btnVerVentasPor = new JButton("Ver Ventas por Empleado");
-		btnVerVentasPor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFrame Items;
-				try {
-					Items = new ItemsPor(d,0);
-					Items.setVisible(true);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-		btnVerVentasPor.setBounds(459, 358, 212, 23);
-		add(btnVerVentasPor);
-
 	}
 	
-	private void updateData(DBinterface d) throws SQLException{
-		tableVerEmpleados.setModel(d.getEmpleados());
-		Empleados = new String[tableVerEmpleados.getModel().getRowCount()];
-		for (int i=0; i< tableVerEmpleados.getModel().getRowCount(); i++){
-			Empleados[i] = (String) tableVerEmpleados.getModel().getValueAt(i, 1);
-		}
-		
-		comboBox.addItem(Empleados[Empleados.length-1]);
+	/**
+	 * Este metodo actualiza los datos que se muestran 
+	 * @param d Instancia de DBinterface
+	 * @throws SQLException
+	 */
+	protected void updateData() throws SQLException{
+		//Actualizar tabla
+		tableVer.setModel(d.getItems("Empleados"));
+		super.updateData();
+	}
+	
+	@Override
+	void deleteItem(DBinterface d, String DPI) throws NumberFormatException, SQLException {
+		d.delEmpleado(Double.parseDouble(DPI));
 	}
 }
