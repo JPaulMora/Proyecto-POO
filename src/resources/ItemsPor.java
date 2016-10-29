@@ -7,10 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import javax.swing.event.PopupMenuListener;
 import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 public class ItemsPor extends JFrame {
 
@@ -19,14 +17,15 @@ public class ItemsPor extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	private TablePane tp;
 	private Chart ch;
 	
 	/**
-	 * Esta clase sirve para mostrar los datos del boton "Ventas por Empleado" y "Compras por Estudiante"
-	 * @throws SQLException 
-	 * 
+	 * Esta clase sirve para mostrar los datos del boton "Ventas por Empleado" y "Compras por Estudiante".
+	 * @param d Instancia de DBinterface.
+	 * @param mode puede ser 0 o 1, dependiendo si se necesita Empleados o Estudiantes respectivamente.
+	 * @throws SQLException En caso hubo un error DBinterface.getAsArray().
 	 */
 	
 	public ItemsPor(DBinterface d, int mode) throws SQLException {
@@ -39,7 +38,7 @@ public class ItemsPor extends JFrame {
 		contentPane.setLayout(null);
 		
 		
-		comboBox = new JComboBox(d.getAsArray(mode));
+		comboBox = new JComboBox<String>(d.getAsArray(mode));
 		comboBox.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent e) {
 			}

@@ -22,7 +22,7 @@ public class DBinterface {
 	 * @param User: Usuario a ingresar sesion.
 	 * @param Pass: Contrasena del usuario.
 	 * @return Devuelve TRUE solo si el login fue correcto, cualquier error (de conexion, de SQL o de el usuario) devuelve FALSE.
-	 * @throws SQLException
+	 * @throws SQLException En caso no se puede conectar con la DB.
 	 */
 	//TODO connectDB()
 	public boolean connectDB(String User, String Pass) throws SQLException{
@@ -61,9 +61,8 @@ public class DBinterface {
 	/**
 	 * 
 	 * @param carnet: carnet del usuario
-	 * @param institucion: institucion en la que se debe buscar el carnet.
 	 * @return Devuelve el balance del usuario requerido en forma de String, o un mensaje que indica que no fue encontrado.
-	 * @throws SQLException
+	 * @throws SQLException En caso no se puede obtener el balance del estudiante.
 	 */
 	//TODO getBalance
 	public Double getBalance(int carnet) throws SQLException{
@@ -91,7 +90,7 @@ public class DBinterface {
 	 * 
 	 * @param carnet Carnet o ID a cambiarle el credito.
 	 * @param d Cantidad que representa el nuevo credito.
-	 * @throws SQLException
+	 * @throws SQLException En caso no se pudo modificar el balance de un estudiante.
 	 */
 	//TODO setBalance
 	public void setBalance(int carnet, double d) throws SQLException{
@@ -108,7 +107,7 @@ public class DBinterface {
 	 *  Funcion registra una compra o gasto en la base de datos.
 	 * @param carnet Carnet o ID del comprador
 	 * @param total El total cargado al cliente.
-	 * @throws SQLException
+	 * @throws SQLException En caso no se pudo registrar la compra.
 	 */
 	//TODO regCompra
 	public void regCompra(int carnet, double total,double dpi) throws SQLException{
@@ -126,9 +125,9 @@ public class DBinterface {
 
 	/**
 	 * 
-	 * @param carnet: el carnet de la persona a revisar
-	 * @return Devuelve un TableModel con las compras hechas por el cliente
-	 * @throws SQLException
+	 * @param carnet: el carnet de la persona a revisar.
+	 * @return Devuelve un TableModel con las compras hechas por el cliente.
+	 * @throws SQLException En caso no se pudo obtener las compras del cliente.
 	 */
 	//TODO getComprasPorCliente
 	public TableModel getComprasPorCliente(int carnet) throws SQLException{
@@ -141,9 +140,9 @@ public class DBinterface {
 	
 	/**
 	 * 
-	 * @param dpi el DPI de la persona a revisar
-	 * @return Devuelve un TableModel con las ventas hechas por el empleado
-	 * @throws SQLException
+	 * @param dpi el DPI de la persona a revisar.
+	 * @return Devuelve un TableModel con las ventas hechas por el empleado.
+	 * @throws SQLException En caso no se pudo obtener las ventas del empleado.
 	 */
 	//TODO getVentasPorEmp
 	public TableModel getVentasPorEmp(double dpi) throws SQLException{
@@ -157,7 +156,7 @@ public class DBinterface {
 	/**
 	 * @param Item Puede ser "Empleados", "Usuarios" o "Productos".
 	 * @return Devuelve los Estudiantes, Empleados o Productos segun lo que diga Item registrados en un TableModel para utilizar en un JTable.
-	 * @throws SQLException
+	 * @throws SQLException En caso no se pudo obtener los "items".
 	 */
 	//TODO getItems
 	public TableModel getItems(String Item) throws SQLException{
@@ -169,8 +168,8 @@ public class DBinterface {
 	/**
 	 * 
 	 * @param mode: Mode 1 = estudiantes, Mode 0 = Empleados.
-	 * @return
-	 * @throws SQLException
+	 * @return Devuelve un array de "items" en forma reconocible, que se usa en un JComboBox
+	 * @throws SQLException En caso no se pudo obtener los "items".
 	 */
 	//TODO getAsArray
 	public String[] getAsArray(int mode) throws SQLException{
@@ -204,7 +203,7 @@ public class DBinterface {
 	 * @param nombres Nombre o nombres de la persona.
 	 * @param apellidos Apelldo o Apelldos de la persona.
 	 * @param balance Credito inical con el que se guarda este registro.
-	 * @throws SQLException
+	 * @throws SQLException En caso no se pudo agregar el estudiante.
 	 */
 	//TODO addEstudiante
 	public void addEstudiante(int carnet, String nombres, String apellidos, double balance) throws SQLException{
@@ -225,7 +224,7 @@ public class DBinterface {
 	 * @param DPI: Numero de DPI del empleado a agregar a la base de datos.
 	 * @param nombres Nombre o nombres de la persona.
 	 * @param apellidos Apelldo o Apelldos de la persona.
-	 * @throws SQLException 
+	 * @throws SQLException En caso no se pudo agregar el empleado.
 	 */
 	//TODO addEmpleado
 	public void addEmpleado(long DPI, String nombres, String apellidos) throws SQLException{
@@ -240,10 +239,10 @@ public class DBinterface {
 	
 	/**
 	 * 
-	 * @param producto Nombre del producto
-	 * @param descripcion Descripcion del producto
-	 * @param precio Valor de pago por producto
-	 * @throws SQLException
+	 * @param producto Nombre del producto.
+	 * @param descripcion Descripcion del producto.
+	 * @param precio Valor de pago por producto.
+	 * @throws SQLException En caso no se pudo agregar el producto.
 	 */
 	//TODO addProducto
 	public void addProducto(String producto, String descripcion, double precio) throws SQLException{
@@ -260,7 +259,7 @@ public class DBinterface {
 	/**
 	 * 
 	 * @param carnet: Carnet del estudiante a eliminar.
-	 * @throws SQLException
+	 * @throws SQLException En caso no se pudo eliminar el estudiante.
 	 */
 	//TODO delEstudiante
 	public void delEstudiante(int carnet) throws SQLException{
@@ -272,7 +271,7 @@ public class DBinterface {
 	/**
 	 * 
 	 * @param DPI: DPI de la persona a eliminar.
-	 * @throws SQLException
+	 * @throws SQLException En caso no se pudo eliminar el empleado.
 	 */
 	//TODO delEmpleado
 	public void delEmpleado(double DPI) throws SQLException {
@@ -284,8 +283,8 @@ public class DBinterface {
 	
 	/**
 	 * 
-	 * @param carnet: Carnet del estudiante a eliminar.
-	 * @throws SQLException
+	 * @param name: Carnet del estudiante a eliminar.
+	 * @throws SQLException En caso no se pudo eliminar el producto.
 	 */
 	//TODO delEstudiante
 	public void delProducto(String name) throws SQLException{
@@ -306,7 +305,7 @@ public class DBinterface {
 	
 	/**
 	 * Este metodo debe ser llamado al finaizar el programa para que se cierre la conexion a la DB.
-	 * @throws SQLException
+	 * @throws SQLException En caso no se pudo cerrar la coneccion, usualmente significa que se perdio en algun momento.
 	 */
 	//TODO closeDB
 	public void closeDB() throws SQLException{

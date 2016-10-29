@@ -21,8 +21,12 @@ public class MainMenu extends JFrame {
 
 
 	/**
-	 * Create the frame.
-	 * @throws SQLException 
+	 * 
+	 * @param d Instancia de DBinterface.
+	 * @param lw Referencia de LoginWindow que sirve para cuando se cierra sesion, asi se puede hacer visible de nuevo.
+	 * @param h Height, sirve para centrar la interfase en la pantalla.
+	 * @param w Width, sirve para centrar la interfase en la pantalla.
+	 * @throws SQLException En caso hubiese un error en la creacion de los objetos que usan DBinterface.
 	 */
 	public MainMenu(DBinterface d,LoginWindow lw, int h, int w) throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

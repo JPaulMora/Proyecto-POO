@@ -27,13 +27,16 @@ abstract class BasePanel extends JPanel{
 	
 	protected String[] Items;
 	protected String[] UINames = new String[2];
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	protected DBinterface d;
 	protected int mode;
 	
 	/**
 	 * Create the panel.
-	 * @throws SQLException 
+	 * @param d Instancia de DBinterface.
+	 * @param UINames Array de Strings que le dan contexto al panel.
+	 * @param mode puede ser 0,1 o 2 segun se necesite Empleados, Estudiantes o Productos respectivamente.
+	 * @throws SQLException  En caso hubo un error en DBinterface.getItems().
 	 */
 	public BasePanel(DBinterface d, String[] UINames,int mode) throws SQLException {
 		this.d = d;
@@ -83,7 +86,7 @@ abstract class BasePanel extends JPanel{
 		Items = d.getAsArray(this.mode);//itemsAsList(d);
 		
 		//Una vez inicializado el array podemos creal el JComboBox, de lo contrario nos da NullPointerException.
-		comboBox = new JComboBox(Items);
+		comboBox = new JComboBox<String>(Items);
 		comboBox.setEditable(true);
 		comboBox.setBounds(24, 34, 233, 27);
 		plEliminar.add(comboBox);
@@ -108,14 +111,13 @@ abstract class BasePanel extends JPanel{
 	
 	/**
 	 * Este metodo actualiza los datos que se muestran cada vez que se agrega o elimina uno.
-	 * @param d Instancia de DBinterface
-	 * @throws SQLException
+	 * @throws SQLException En caso hay un error en DBinterface.getAsArray()
 	 */
 	protected void updateData() throws SQLException{
 		//Actualizar array de items dentro del comboBox del menu eliminar
 		Items =  d.getAsArray(this.mode);
 		//Actualizar el ComboBox
-		DefaultComboBoxModel model = new DefaultComboBoxModel(Items);
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(Items);
 		comboBox.setModel(model);
 	}
 	
@@ -123,8 +125,8 @@ abstract class BasePanel extends JPanel{
 	 * 
 	 * @param d Instancia de DBinterface.
 	 * @param item Nombre o palabra con la que se identifica el objeto a eliminar.
-	 * @throws NumberFormatException
-	 * @throws SQLException
+	 * @throws NumberFormatException En las clases hijas es necesario convertir "item" a int o double, error en la subclase se refleja aqui.
+	 * @throws SQLException En caso no se puede eliminar el item.
 	 */
 	abstract void deleteItem(DBinterface d,String item) throws NumberFormatException, SQLException;
 }

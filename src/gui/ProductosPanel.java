@@ -24,7 +24,7 @@ public class ProductosPanel extends BasePanel {
 	/**
 	 * 
 	 * @param d Instancia de DBinterface
-	 * @throws SQLException
+	 * @throws SQLException Cuando no hay errores en la super clase.
 	 */
 	public ProductosPanel(DBinterface d) throws SQLException {
 		super(d, new String[]{"Productos"}, 2);
@@ -80,8 +80,7 @@ public class ProductosPanel extends BasePanel {
 	
 	/**
 	 * Este metodo actualiza los datos que se muestran 
-	 * @param d Instancia de DBinterface
-	 * @throws SQLException
+	 * @throws SQLException En caso hay un error en DBinterface.getAsArray() en la super clase.
 	 */
 	protected void updateData() throws SQLException{
 		//Actualizar tabla

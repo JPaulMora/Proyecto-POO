@@ -25,7 +25,7 @@ public class EstudiantesPanel extends BasePanel {
 	/**
 	 * 
 	 * @param d Instancia de DBinterface
-	 * @throws SQLException
+	 * @throws SQLException En caso hay problemas en la super clase.
 	 */
 	
 	public EstudiantesPanel(DBinterface d) throws SQLException {

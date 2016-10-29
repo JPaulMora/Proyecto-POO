@@ -34,12 +34,10 @@ public class LoginWindow extends JDialog {
 	private static final int ScreenHeight = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 	private LoginWindow lw = this;
 	
-	/**
-	 * Create the dialog.
-	 * @param d Este parametro debe ser una instancia de DBinterface.
-	 * @param m Este parametro debe ser la ventana principal.
+	/** 
+	 * @param args Argumentos de inicializacion.
+	 * @throws ClassNotFoundException Requerido por java en caso JDBC_DRIVER no se encuentra.
 	 */
-	
 	public static void main(String[] args) throws ClassNotFoundException {
 		Class.forName(JDBC_DRIVER);
 		DBinterface db = new DBinterface();

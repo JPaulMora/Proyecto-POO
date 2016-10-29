@@ -24,7 +24,7 @@ public class EmpleadosPanel extends BasePanel{
 	/**
 	 * 
 	 * @param d Instancia de DBinterface
-	 * @throws SQLException
+	 * @throws SQLException En caso hay problemas en la super clase.
 	 */
 	
 	public EmpleadosPanel(DBinterface d) throws SQLException {
@@ -80,8 +80,7 @@ public class EmpleadosPanel extends BasePanel{
 	
 	/**
 	 * Este metodo actualiza los datos que se muestran 
-	 * @param d Instancia de DBinterface
-	 * @throws SQLException
+	 * @throws SQLException En caso hay un error en DBinterface.getAsArray() en la super clase.
 	 */
 	protected void updateData() throws SQLException{
 		//Actualizar tabla

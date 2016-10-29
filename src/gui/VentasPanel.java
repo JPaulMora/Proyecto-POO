@@ -40,7 +40,8 @@ public class VentasPanel extends JPanel {
 
 	/**
 	 * Create the panel.
-	 * @throws SQLException 
+	 * @param d Instancia de DBinterface
+	 * @throws SQLException Si no se pueden obtener los productos.
 	 */
 
 public VentasPanel(DBinterface d) throws SQLException {	   
