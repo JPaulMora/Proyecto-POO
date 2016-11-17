@@ -21,12 +21,16 @@ public class MainMenu extends JFrame {
 
 
 	/**
-	 * Create the frame.
-	 * @throws SQLException 
+	 * 
+	 * @param d Instancia de DBinterface.
+	 * @param lw Referencia de LoginWindow que sirve para cuando se cierra sesion, asi se puede hacer visible de nuevo.
+	 * @param h Height, sirve para centrar la interfase en la pantalla.
+	 * @param w Width, sirve para centrar la interfase en la pantalla.
+	 * @throws SQLException En caso hubiese un error en la creacion de los objetos que usan DBinterface.
 	 */
 	public MainMenu(DBinterface d,LoginWindow lw, int h, int w) throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(w/2-365, h/2-250, 730, 530);
+		setBounds(w/2-365, h/2-250, 715, 530);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -34,7 +38,7 @@ public class MainMenu extends JFrame {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setToolTipText("Test");
-		tabbedPane.setBounds(0, 18, 730, 459);
+		tabbedPane.setBounds(0, 18, 715, 459);
 		contentPane.add(tabbedPane);
 		
 		JPanel ventas = new VentasPanel(d);         
@@ -58,7 +62,7 @@ public class MainMenu extends JFrame {
 				}
 			}
 		});
-		btnCerrarSesion.setBounds(548, 473, 164, 29);
+		btnCerrarSesion.setBounds(513, 473, 164, 29);
 		contentPane.add(btnCerrarSesion);
 		
 	}

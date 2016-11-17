@@ -1,15 +1,17 @@
 package resources;
-import org.jfree.chart.*; // grafico de lineas
-import org.jfree.data.xy.*;
-import org.jfree.chart.plot.PlotOrientation;
-import java.awt.EventQueue;
 import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
+
+// grafico de lineas
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 public class Chart extends JPanel {
 	/**

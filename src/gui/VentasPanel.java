@@ -34,13 +34,14 @@ public class VentasPanel extends JPanel {
 	private final String[] carroNames = {"producto","precio"};
 	private double total = 0;
 	private DecimalFormat dinero = new DecimalFormat("Sub-Total: Q####.##");
-	JComboBox comboBox;
+	JComboBox<String> comboBox;
 	private DBinterface d;
 
 
 	/**
 	 * Create the panel.
-	 * @throws SQLException 
+	 * @param d Instancia de DBinterface
+	 * @throws SQLException Si no se pueden obtener los productos.
 	 */
 
 public VentasPanel(DBinterface d) throws SQLException {	   
@@ -58,7 +59,7 @@ public VentasPanel(DBinterface d) throws SQLException {
 		spProductos.setBounds(37, 81, 643, 106);
 		add(spProductos);
 		
-		tblProductos = new JTable(d.getProductos());
+		tblProductos = new JTable(d.getItems("Productos"));
 		tblProductos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); 
 		spProductos.setViewportView(tblProductos);
 		
@@ -173,7 +174,7 @@ public VentasPanel(DBinterface d) throws SQLException {
 		
 		spCuentas.setViewportView(tblCarro);
 		
-		comboBox = new JComboBox(d.getAsArray(0));
+		comboBox = new JComboBox<String>(d.getAsArray(0));
 		comboBox.setBounds(6, 6, 270, 27);
 		add(comboBox);
 		

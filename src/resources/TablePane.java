@@ -7,6 +7,10 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
 public class TablePane extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private ItemsPor i;
 	private DBinterface d;
