@@ -1,24 +1,3 @@
-<?php
-include 'database.php';
-$pdo = Database::connect();
-$sql = 'SELECT * FROM estudiantes WHERE id=$Nombre';
-foreach ($pdo->query($sql) as $row) {
-    echo '<tr>';
-    echo '<td>'. $row['name'] . '</td>';
-    echo '<td>'. $row['email'] . '</td>';
-    echo '<td>'. $row['mobile'] . '</td>';
-    echo '<td width=250>';
-    echo '<a class="btn" href="read.php?id='.$row['id'].'">Read</a>';
-    echo '&nbsp;';
-    echo '<a class="btn btn-success" href="update.php?id='.$row['id'].'">Update</a>';
-    echo '&nbsp;';
-    echo '<a class="btn btn-danger" href="delete.php?id='.$row['id'].'">Delete</a>';
-    echo '</td>';
-    echo '</tr>';
-}
-Database::disconnect();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,393 +12,379 @@ Database::disconnect();
     <title>Sistema de cobros Uvg</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
 
-    <!-- Theme CSS -->
-    <link href="css/freelancer.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <!-- Jquery-UI--->
-    <link href="css/jquery-ui.css" rel="stylesheet">
 
-    <script>
-
-        function getQueryParams(qs) {
-            qs = qs.split("+").join(" ");
-            var params = {},
-                tokens,
-                re = /[?&]?([^=]+)=([^&]*)/g;
-
-            while (tokens = re.exec(qs)) {
-                params[decodeURIComponent(tokens[1])]
-                    = decodeURIComponent(tokens[2]);
-            }
-
-            return params;
-        }
-        function getNombre(array){
-            //aca iria un query a la base de datos para determinar el nombre del usuario
-            if(array["email"]==1234){
-                return "Ejemplo1";
-            }else if(array["email"]==15246){
-                return "Byron Mota";
-            }else if(array["email"]==151126){
-                return "asdaksmdaskldm";
-            }
-        }
-
-        function getSaldo(array){
-            //aca iria un query a la base de datos para determinar el saldo del usuario
-            if(array["email"]==1234){
-                return "100.00";
-            }else if(array["email"]==15246){
-                return "250.00";
-            }else if(array["email"]==151126){
-                return "50.00";
-            }
-        }
-
-        function getConsumo(array){
-            //aca iria un query a la base de datos para determinar el ultimo consumo del usuario
-            if(array["email"]==1234){
-                return "Unos deliciosos tacos";
-            }else if(array["email"]==15246){
-                return "Latte frío 16oz";
-            }else if(array["email"]==151126){
-                return "Galleta de Chocolate";
-            }
-        }
-
-        var $_GET = getQueryParams(document.location.search);
-        function setValues($_GET){
-            $(document).ready(function(){
-                $("#nombre").text(getNombre($_GET));
-                $("#carnet").text($_GET["email"]);
-                $("#saldo").text(getSaldo($_GET));
-                $("#consumo").text(getConsumo($_GET));
-            });
-        }
-        setValues($_GET);
-
-        function comprar(){
-            var consumoR=$('#comida').val();
-            $("#consumo").text(consumoR);
-            $.("#comida").text("");
-            alert("Consumo agregado con exito");
-        }
-
-        $(document).ready(function(){
-            $("#validar").click(function(){
-                comprar();
-                $('.modal').trigger("click");
-
-            });
-        });
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 
 
-    </script>
 
 
 </head>
 
-<body id="page-top" class="index">
+<body id="page-top" class="common-font-color-white width-100">
+<div class="width-100">
+    <?php include 'database.php';
 
+    echo("Ejecutando...");
+    try{
+        echo("Trying...");
 
-<!-- Navigation -->
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <a class="navbar-brand" href="#page-top">CobrosUVG</a>
+        $carnet=$_GET["carnet"];
+        $pw=$_GET["pw"];
+        echo("Trying...2");
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT * FROM Clientes ";
+        $result=$pdo->query($sql);
+        if(in_array($carnet, $result) and in_array($pw, $result)){
+            console.log("login exitoso");
+        } elseif (result==null){
+            header("Location: main.php");
+        }
+    }catch (Exception $e){
+        
+        console.log($e);
+    }
+    ?>
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top color-body common-font-color-white">
+        <div class="container padding-0 ">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header ">
+                <a class="navbar-brand common-font-color-white common-font-size-lg cleanup-link" href="#page-top">CobrosUVG</a>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<!-- Header -->
-<header>
-    <div class="container">
+    <!-- Header -->
+    <header class="color-uvg">
+        <div class="container padding-0">
+            <div class="row-fluid padding-0">
+                <div class="col-lg-12 padding-0  text-center common-margin-top-30">
+                    <img class=" common-margin-top-80" src="img/portfolio/uvg.png" alt="">
+
+                </div>
+                <div class="col-lg-12 padding-0 text-center common-margin-top-30">
+                    <span class="common-font-size-xl common-font-weight-bold common-font-line-height-xl">Sistema de cobros UVG</span>
+                    <br>
+                    <span class="common-font-size-lg common-font-line-height-xl">Que vas a comer hoy?</span>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio" class="common-margin-top-30 common-margin-bottom-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Opciones:  </h2>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 portfolio-item">
+                    <a href="" class="cleanup-link text-center" data-toggle="modal" data-target="#myModal3">
+
+                        <img src="img/portfolio/cooker.png"  class="img-responsive" style="padding-left:45px;">
+                    </a>
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                    <a href="" class="cleanup-link text-center" data-toggle="modal" data-target="#myModal1">
+
+                        <img src="img/portfolio/padnote.png" class="img-responsive" style="padding-left:45px;">
+                    </a>
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                    <a href="" class="cleanup-link text-center" data-toggle="modal" data-target="#myModal2">
+
+                        <img src="img/portfolio/restaurant-app.png"  style="padding-left:45px;">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid" style="padding-bottom: 30px">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4">
+                <button  style="width:100%; background-color:#2aa22a" id="Salir" class="btn btn-primary center-block" ><a class=" common-font-color-white cleanup-link" href = "logout.php">Salir</a></button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center color-footer">
+        <div class="footer-above">
+            <div class="container">
                 <div class="row">
-                    <img class="img-responsive" src="img/portfolio/uvg.png" alt="">
-                </div>
-                <div class="intro-text">
-                    <span class="name">Sistema de cobros UVG</span>
-                    <span class="skills">Que vas a comer hoy?</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
 
-<!-- Portfolio Grid Section -->
-<section id="portfolio">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2>Opciones:  </h2>
-                <hr class="star-primary">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <h3><strong>Perfil</strong></h3>
+                    <div class="footer-col col-md-4">
+                        <h3>Acerca del equipo:</h3>
+                        <h4>Integrantes: </h4>
+                        </br>
+                        <div class="text-left">
+                            <ul>
+                                <li><h5>Pablo Rene Arellano</h5></li>
+                                <li><h5>Jose Rodrigo Corona</h5></li>
+                                <li><h5>Fernando Gabriel Mendez</h5></li>
+                                <li><h5>Juan Pablo Mora</h5></li>
+                                <li><h5>Byron Andres Mota</h5></li>
+                            </ul>
                         </div>
                     </div>
-                    <img src="img/portfolio/cooker.png" class="img-responsive" style="padding-left:45px;">
-                </a>
-            </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <h3><strong>Consumos</strong></h3>
-                        </div>
-                    </div>
-                    <img src="img/portfolio/padnote.png" class="img-responsive" style="padding-left:45px;">
-                </a>
-            </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <h3><strong>Hacer un consumo</strong></h3>
-                        </div>
-                    </div>
-                    <img src="img/portfolio/restaurant-app.png" class="img-responsive" style="padding-left:45px;">
-                </a>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<div class="container-fluid" style="padding-bottom: 30px">
-    <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4">
-            <button  style="width:100%; background-color:#2aa22a" id="Salir" class="btn btn-primary center-block" ><a style="text-decoration: none; color:white; " href = "logout.php">Salir</a></button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- Footer -->
-<footer class="text-center">
-    <div class="footer-above">
-        <div class="container">
-            <div class="row">
-
-                <div class="footer-col col-md-4">
-                    <h3>Acerca del equipo:</h3>
-                    <h4>Integrantes: </h4>
-                    </br>
-                    <div class="text-left">
-                        <ul>
-                            <li><h5>Pablo Rene Arellano</h5></li>
-                            <li><h5>Jose Rodrigo Corona</h5></li>
-                            <li><h5>Fernando Gabriel Mendez</h5></li>
-                            <li><h5>Juan Pablo Mora</h5></li>
-                            <li><h5>Byron Andres Mota</h5></li>
-                        </ul>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        SistemaCobrosUVG &copy; POO 2016
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="footer-below">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    SistemaCobrosUVG &copy; POO 2016
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-<div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
-    <a class="btn btn-primary" href="#page-top">
-        <i class="fa fa-chevron-up"></i>
-    </a>
-</div>
-
-<!-- Portfolio Modals -->
-<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-content">
-        <div class="close-modal" data-dismiss="modal">
-            <div class="lr">
-                <div class="rl">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <div class="modal-body">
-                        <h2>Perfil</h2>
-                        <hr class="star-primary">
-                        <img src="img/portfolio/user.png" class="img-responsive img-centered" alt="">
-                        <ul class="list-inline item-details">
-                            <li>Nombre:
-                                <strong id="nombre"><?php //get de la base de datos para el nombre del usuario?></strong>
-                            </li>
-                            <li>Carnet:
-                                <strong id="carnet"><?php //get de la base de datos para el carnet?></strong>
-                            </li>
-                            <li>Saldo Disponible:
-                                <strong id="saldo"><?php //get de la base de datos, llamada de la funcion saldo()?></strong>
-                            </li>
-                            <li>Consumo mas Reciente:
-                                <strong id="consumo"><?php //get de la base de datos para el ultimo consumo?></strong>
-                            </li>
-                        </ul>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+        <a class="btn btn-primary cleanup-link" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
     </div>
-</div>
-<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-content">
-        <div class="close-modal" data-dismiss="modal">
-            <div class="lr">
-                <div class="rl">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="modal-body">
-                        <h2>Consumos:</h2>
-                        <div class="container" style="">
-                            <table class="table table-condensed">
-                                <thead>
-                                <tr>
-                                    <th><span class="glyphicon glyphicon-calendar"></span></th>
-                                    <th><span class="glyphicon glyphicon-ice-lolly-tasted"></span></th>
-                                    <th><img src="img/portfolio/money.png" style="margin-bottom:0px;"></th>
-                                    <th><span class="glyphicon glyphicon-shopping-cart"></span></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                include 'database.php';
-                                $pdo = Database::connect();
-                                $sql = 'SELECT * FROM customers ORDER BY id DESC';
-                                foreach ($pdo->query($sql) as $row) {
-                                    echo '<tr>';
-                                    echo '<td>'. $row['name'] . '</td>';
-                                    echo '<td>'. $row['email'] . '</td>';
-                                    echo '<td>'. $row['mobile'] . '</td>';
-                                    echo '</tr>';
-                                }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-content">
-        <div class="close-modal" data-dismiss="modal">
-            <div class="lr">
-                <div class="rl">
-                </div>
-            </div>
-        </div>
 
-        <div class="container">
-            <div class="row" >
-                <div class="col-lg-12">
-                    <div class="modal-body">
-                        <h2>Realizar un Consumo</h2>
-                        <div id="accordion" role="tablist" aria-multiselectable="true" style="margin-top:20px;  ">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Café Gitane
-                                        </a>
-                                    </h4>
+    <!-- Portfolio Modals -->
+
+    <div class="modal fade bs-example-modal-lg common-font-color-black  " id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel3">Perfíl del estudiante</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid padding-0">
+                        <div class="row padding-0">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0 text-center">
+                                    <?php
+
+                                    $pdo = Database::connect();
+                                    $sql = 'SELECT * FROM Transacciones ORDER BY id DESC LIMIT BY 10';
+                                    $resultado=$pdo->query($sql);
+
+                                    ?>
+
                                 </div>
-                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                    <div id="gitane">
-                                        <input  type="text" class="form-control" placeholder="Escriba el producto que desea" id="comida" >
-                                        <button  id="validar" class="btn btn-primary center-block" >Comprar</button>
+                                <div class="col-sm-12 col-md-4 col-xs-12 col-lg-3 text-center ">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0 common-font-weight-bold">
+                                        Nombre
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0">
+                                        asdasd
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4 col-xs-12 col-lg-3 text-center">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0 common-font-weight-bold">
+                                        Carnet
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0">
+                                        ######
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4 col-xs-12 col-lg-3 text-center">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0 common-font-weight-bold">
+                                        Saldo restante
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0">
+                                        asdasd
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4 col-xs-12 col-lg-3 text-center">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0 common-font-weight-bold">
+                                        Último consumo
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0">
+                                        asdasd
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingTwo">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            GoGreen
-                                        </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bs-example-modal-lg common-font-color-black  " id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Hacer un consumo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title common-font-color-black">
+                                        Café Gitane
+
                                     </h4>
                                 </div>
-                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </a>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <form action="create.php" method="get">
+                                        <div class="form-group">
+                                            <label >Ingrese el nombre del producto a comprar</label>
+                                            <input type="text" class="form-control" name="producto">
+                                        </div>
+                                        <div class="form-group hidden">
+                                            <input type="number" class="hidden form-control" name="rest" value="1">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-default">Comprar</button>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingThree">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Bagel Factory
-                                        </a>
+                        </div>
+                        <div class="panel panel-default">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title common-font-color-black">
+                                        Bagel factory
                                     </h4>
                                 </div>
-                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </a>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <form action="create.php" method="get">
+                                        <div class="form-group">
+                                            <label >Ingrese el nombre del producto a comprar</label>
+                                            <input type="text" class="form-control" name="producto">
+                                        </div>
+                                        <div class="form-group hidden">
+                                            <input type="number" class="hidden form-control" name="rest" value="2">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-default">Comprar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <div class="panel-heading" role="tab" id="headingThree">
+                                    <h4 class="panel-title common-font-color-black">
+                                        Go Green
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    <form action="create.php" method="get">
+                                        <div class="form-group">
+                                            <label >Ingrese el nombre del producto a comprar</label>
+                                            <input type="text" class="form-control" name="producto">
+                                        </div>
+                                        <div class="form-group hidden">
+                                            <input type="number" class="hidden form-control" name="rest" value="3">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-default">Comprar</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade bs-example-modal-lg common-font-color-black  " id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel2">Consumos recientes</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 text-center">
+                        <table class="table ">
+                            <thead>
+                            <tr class="text-center">
+                                <th>Fecha</th>
+                                <th>Producto</th>
+                                <th>$$$</th>
+                                <th>Donde?</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+
+                            $pdo = Database::connect();
+                            $sql = 'SELECT * FROM Transacciones ORDER BY id DESC LIMIT BY 10';
+                            foreach ($pdo->query($sql) as $row) {
+                                echo '<tr>';
+                                echo '<td>'. $row['fecha'] . '</td>';
+                                echo '<td>'. $row['descripcion'] . '</td>';
+                                echo '<td>'. $row['monto'] . '</td>';
+                                echo '<td>'. $row['establecimiento'] . '</td>';
+                                echo '</tr>';
+                            }
+                            Database::disconnect();
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
 
-
-<!-- jQuery -->
 
 
 
 
 <!-- Bootstrap Core JavaScript -->
-<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap.min.js"></script>
 
 
-<!-- Plugin JavaScript -->
-
-<!-- Contact Form JavaScript -->
-<script src="js/jqBootstrapValidation.js"></script>
-<script src="js/contact_me.js"></script>
-
-<!-- Theme JavaScript -->
-<script src="js/freelancer.min.js"></script>
 
 </body>
 
