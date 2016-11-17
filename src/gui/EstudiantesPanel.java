@@ -28,7 +28,7 @@ public class EstudiantesPanel extends BasePanel {
 	 * @throws SQLException En caso hay problemas en la super clase.
 	 */
 	
-	public EstudiantesPanel(DBinterface d) throws SQLException {
+	public EstudiantesPanel(DBinterface d) throws SQLException  {
 		super(d,new String[]{"Estudiantes","Compras"},1);
 		
 		//Sub-panel que agrega estudiantes
@@ -49,7 +49,14 @@ public class EstudiantesPanel extends BasePanel {
 					updateData();
 					
 				}
-				catch(NumberFormatException e1){
+				catch(NumberFormatException e1 ){
+					
+					/* throws tieneLetras
+					 * if (){
+				            mensaje +="\n Carnet solo debe de tener numeros";
+				            excepcion = new tieneLetras(mensaje);
+				            throw excepcion;
+				        }*/
 					JOptionPane.showMessageDialog(null, "Carnet solo debe contener numeros.","Error!", JOptionPane.ERROR_MESSAGE);
 				}
 				catch(SQLException e2){
