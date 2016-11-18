@@ -5,10 +5,11 @@ import javax.swing.table.TableModel;
 
 public class NotEditableModel extends AbstractTableModel{
 	/**
-	 * 
+	 * El objetivo de esta clase es que las tablas a lo largo de la aplicacion no se puedan editar.
 	 */
 	private static final long serialVersionUID = 1L;
 	private TableModel m;
+	
 	public NotEditableModel(TableModel m){
 		this.m = m;
 	}

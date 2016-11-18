@@ -15,7 +15,14 @@ public class TablePane extends JPanel{
 	private ItemsPor i;
 	private DBinterface d;
 	private int mode;
-	
+	/**
+	 * 
+	 * @param d Instancia de DBinterface 
+	 * @param i Instancia de ItemsPor, que maneja este panel.
+	 * @param mode 1 obtiene Compras por estudiante, 2 obtiene ventas por empleado.
+	 * @throws NumberFormatException Si las compras o ventas de getComprasPorCliente o getVentasPorEmp no son numericas.
+	 * @throws SQLException Si los metodos anteriores no sirven.
+	 */
 	public TablePane(DBinterface d,ItemsPor i,int mode) throws NumberFormatException, SQLException {
 		this.d = d;
 		this.i = i;

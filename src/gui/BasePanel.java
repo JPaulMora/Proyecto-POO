@@ -32,7 +32,7 @@ abstract class BasePanel extends JPanel{
 	protected int mode;
 	
 	/**
-	 * Create the panel.
+	 * Este panel sirve de plantilla para desplegar los datos que se requieren de forma ordenada. Este panel no deberia ser instanciado, solo extendido.
 	 * @param d Instancia de DBinterface.
 	 * @param UINames Array de Strings que le dan contexto al panel.
 	 * @param mode puede ser 0,1 o 2 segun se necesite Empleados, Estudiantes o Productos respectivamente.

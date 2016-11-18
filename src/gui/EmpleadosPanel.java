@@ -22,7 +22,7 @@ public class EmpleadosPanel extends BasePanel{
 	private JTextField txtApellidos;
 	
 	/**
-	 * 
+	 * Este panel implementa la forma de agregar un Empleado a la base de datos y el metodo necesario para eliminar un Empleado.
 	 * @param d Instancia de DBinterface
 	 * @throws SQLException En caso hay problemas en la super clase.
 	 */

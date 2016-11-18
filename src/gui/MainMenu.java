@@ -21,7 +21,7 @@ public class MainMenu extends JFrame {
 
 
 	/**
-	 * 
+	 * Clase encargada de contener a los distintos paneles de la aplicacion, adicional a esto, la clase permite cerrar sesion.
 	 * @param d Instancia de DBinterface.
 	 * @param lw Referencia de LoginWindow que sirve para cuando se cierra sesion, asi se puede hacer visible de nuevo.
 	 * @param h Height, sirve para centrar la interfase en la pantalla.

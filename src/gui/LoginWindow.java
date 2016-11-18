@@ -35,6 +35,7 @@ public class LoginWindow extends JDialog {
 	private LoginWindow lw = this;
 	
 	/** 
+	 * Esta clase crea la unica instancia de DBinterface, MainMenu y en cuanto se inicia sesion correctamente se esconde.
 	 * @param args Argumentos de inicializacion.
 	 * @throws ClassNotFoundException Requerido por java en caso JDBC_DRIVER no se encuentra.
 	 */

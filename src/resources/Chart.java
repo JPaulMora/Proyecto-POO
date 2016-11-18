@@ -14,9 +14,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 public class Chart extends JPanel {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	BufferedImage grafica = null;
 	private DBinterface d;
@@ -24,6 +22,12 @@ public class Chart extends JPanel {
 	private ItemsPor i;
 	private TableModel data;
 
+	/**
+	 * Clase se encarga de devolver un panel con una imagen de la informacion que se le haya dado.
+	 * @param d Instancia de DBinterface
+	 * @param i Instancia de ItemsPor, que es el frame que contiene este panel.
+	 * @param mode 1 = Estudiantes, 2 = Empleados
+	 */
 	public Chart(DBinterface d,ItemsPor i,int mode) {
 		setBounds(0,0,530, 310);
 		setLayout(null);
@@ -31,7 +35,12 @@ public class Chart extends JPanel {
 		this.mode = mode;
 		this.d = d;
 		}
-	
+	/**
+	 * 
+	 * @return La grafica en forma de BufferedImage
+	 * @throws NumberFormatException En caso un dato de compra o venta no sea numerico.
+	 * @throws SQLException si getComprasPorCliente o getVentasPorEmp fallan.
+	 */
 	public BufferedImage creaImagen() throws NumberFormatException, SQLException
     {
 		String cname;
@@ -53,6 +62,9 @@ public class Chart extends JPanel {
         return image;
         }
 	
+	/**
+	 * Requerido por java, actualiza la forma en que se ve el panel.
+	 */
 	public void paint(java.awt.Graphics g) {
         try {
 			grafica = this.creaImagen();

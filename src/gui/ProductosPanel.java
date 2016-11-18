@@ -22,7 +22,7 @@ public class ProductosPanel extends BasePanel {
 	private JTextField tfPrecio;
 	
 	/**
-	 * 
+	 * Este panel implementa la forma de agregar un Producto a la base de datos y el metodo necesario para eliminar un Producto.
 	 * @param d Instancia de DBinterface
 	 * @throws SQLException Cuando no hay errores en la super clase.
 	 */

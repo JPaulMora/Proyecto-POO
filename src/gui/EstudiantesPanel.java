@@ -23,7 +23,7 @@ public class EstudiantesPanel extends BasePanel {
 	private JTextField txtBalance;
 
 	/**
-	 * 
+	 * Este panel implementa la forma de agregar un Estudiante a la base de datos y el metodo necesario para eliminar un Estudiante.
 	 * @param d Instancia de DBinterface
 	 * @throws SQLException En caso hay problemas en la super clase.
 	 */

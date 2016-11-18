@@ -39,7 +39,7 @@ public class VentasPanel extends JPanel {
 
 
 	/**
-	 * Create the panel.
+	 * Panel encargado de manejar las transacciones de la aplicacion.
 	 * @param d Instancia de DBinterface
 	 * @throws SQLException Si no se pueden obtener los productos.
 	 */

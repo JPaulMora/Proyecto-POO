@@ -22,7 +22,7 @@ public class ItemsPor extends JFrame {
 	private Chart ch;
 	
 	/**
-	 * Esta clase sirve para mostrar los datos del boton "Ventas por Empleado" y "Compras por Estudiante".
+	 * Esta clase sirve para mostrar los datos del boton "Ventas por Empleado" y "Compras por Estudiante" maneja internamente dos paneles con esta informacion.
 	 * @param d Instancia de DBinterface.
 	 * @param mode puede ser 0 o 1, dependiendo si se necesita Empleados o Estudiantes respectivamente.
 	 * @throws SQLException En caso hubo un error DBinterface.getAsArray().
@@ -64,11 +64,18 @@ public class ItemsPor extends JFrame {
 		tabbedPane.setBounds(5, 33, 529, 290);
 		contentPane.add(tabbedPane);
 	}
-	
+	/**
+	 * 
+	 * @return Devuelve el objeto seleccionado en un String.
+	 */
 	public String getItemFromBox(){
 		return comboBox.getSelectedItem().toString();
 	}
-	
+	/**
+	 * Metodo se utiliza para recrear el view cada vez que se escoge un nuevo estudiante.
+	 * @throws NumberFormatException Utilizado por TablePane.update().
+	 * @throws SQLException En caso TablePane.update() no se conecta correctamente a DB.
+	 */
 	private void update() throws NumberFormatException, SQLException{
 		tp.update();
 		ch.repaint();

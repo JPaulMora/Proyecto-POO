@@ -11,14 +11,14 @@ public class DBinterface {
 	private boolean connected = false; //Variable guarda el valor TRUE si el programa pudo acceder al servidor.
 	private final String institucion = "UVG";
 	
-	//Variables necesarias para los comandos SQL. 
-	String DB_URL = "jdbc:mysql://pproyectop.now.im/Ventas";//"jdbc:mysql://localhost/ventas";
+	
+	String DB_URL = "jdbc:mysql://sql9.freemysqlhosting.net/sql9145095";
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
 
 	/**
-	 * 
+	 * Clase dedicada solamente a interactuar con la base de datos, esto previene errores en el input del usuario y facilita el corregir errores.
 	 * @param User: Usuario a ingresar sesion.
 	 * @param Pass: Contrasena del usuario.
 	 * @return Devuelve TRUE solo si el login fue correcto, cualquier error (de conexion, de SQL o de el usuario) devuelve FALSE.
@@ -105,7 +105,8 @@ public class DBinterface {
 	
 	/**
 	 *  Funcion registra una compra o gasto en la base de datos.
-	 * @param carnet Carnet o ID del comprador
+	 * @param carnet Carnet o ID del comprador.
+	 * @param dpi el DPI del vendedor que registra la compra.
 	 * @param total El total cargado al cliente.
 	 * @throws SQLException En caso no se pudo registrar la compra.
 	 */
